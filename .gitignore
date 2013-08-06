@@ -1,0 +1,7 @@
+## 
+# .gitignore for dot.dotfiles
+
+# vi[m] swap files
+*~
+*.swp
+*.swo
