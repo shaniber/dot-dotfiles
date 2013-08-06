@@ -48,10 +48,10 @@ TITLEBAR='\[\e]0;\u@\h:\w\a\]'
 PROMPT="${green}\u${noColour}@${hostColour}\h${noColour}:${blue}\w${lred}$(__git_ps1)${noColour}\$"
 case "${TERM}" in 
 xterm*|rxvt*)
-	PS1="${TITLEBAR}${PROMPT} "
+	PS1="${TITLEBAR}${green}\u${noColour}@${hostColour}\h${noColour}:${blue}\w${lred}"'$(__git_ps1)'"${noColour}\$ "
 	;;
 linux)
-	PS1="${PROMPT} "
+	PS1="${green}\u${noColour}@${hostColour}\h${noColour}:${blue}\w${lred}"'$(__git_ps1)'"${noColour}\$ "
 	;;
 *)
 	PS1='\u@\h:\w\$ '
