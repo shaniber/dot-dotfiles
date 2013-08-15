@@ -16,6 +16,7 @@ lblue='\e[94m'
 lpurple='\e[95m'
 lcyan='\e[96m'
 white='\e[97m'
+dashes="\$(s=\$(printf "%*s" 3); echo \${s// /―})"
 
 noColour='\e[0m'
 
@@ -34,8 +35,8 @@ dexter*)
 	;;
 esac
 
-echo -e ${hostColour}
-echo "  Welcome, ${USER}!"
+#echo -e ${hostColour}
+#echo "  Welcome, ${USER}!"
 
 # Source global definitions
 if [ -f /etc/bash.bashrc ]; then
@@ -51,24 +52,24 @@ source ~/.git-prompt
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
 
 # Colour prompt with git status.
-TITLEBAR='\[\e]0;\u@\h:\w\a\]'
 case "${TERM}" in 
 xterm*|rxvt*)
-	PS1="${TITLEBAR}${green}\u${noColour}@${hostColour}\h${noColour}:${blue}\w${lred}"'$(__git_ps1)'"${noColour}\$ "
+	TITLEBAR='\[\e]0;\u@\h:\w\a\]'
+	PS1="${TITLEBAR}${green}${dashes} \u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
 	;;
 linux)
-	PS1="${green}\u${noColour}@${hostColour}\h${noColour}:${blue}\w${lred}"'$(__git_ps1)'"${noColour}\$ "
+	PS1="${green}${dashes} \u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
 	;;
 *)
 	PS1='\u@\h:\w\$ '
 	;;
 esac
-export PS1
 
 # User specific environment and startup programs
 PATH=$PATH:$HOME/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
-export PATH VISUAL EDITOR
 
-echo -e ${noColour}
+export PS1 PATH VISUAL EDITOR
+
+#echo -e ${noColour}
