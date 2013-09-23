@@ -7,3 +7,5 @@
 	status = auto
 [push]
 	default = matching
+[core]
+        excludesfile = /home/ssd/.gitignore

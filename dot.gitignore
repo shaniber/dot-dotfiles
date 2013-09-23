@@ -1,0 +1,7 @@
+###
+# global .gitignore.
+
+# vim backups and swap files.
+*.sw?
+*~
+
