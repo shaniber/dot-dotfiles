@@ -44,6 +44,8 @@ fi
 source ~/.git-completion
 source ~/.git-prompt
 
+# (yes, it's because I'm a clumsy typist)
+alias ls-la='ls -la'
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
