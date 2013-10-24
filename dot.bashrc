@@ -56,7 +56,7 @@ xterm*|rxvt*)
 	TITLEBAR='\[\e]0;\u@\h:\w\a\]'
 	PS1="${TITLEBAR}${hostColour}${dashes} ${green}\u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
 	;;
-linux)
+linux|vt*)
 	PS1="${green}${dashes} \u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
 	;;
 *)
@@ -69,4 +69,6 @@ PATH=$PATH:$HOME/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 
-export PS1 PATH VISUAL EDITOR
+PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\E[47;41mERROR:\033[0m \033[01;31m$ret\033[00;00m"; fi'
+
+export PS1 PATH VISUAL EDITOR PROMPT_COMMAND
