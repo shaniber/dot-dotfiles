@@ -69,6 +69,7 @@ PATH=$PATH:$HOME/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 
-PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\E[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
+#PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\e[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
+PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\x1B[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
 
 export PS1 PATH VISUAL EDITOR PROMPT_COMMAND

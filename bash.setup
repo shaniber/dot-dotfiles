@@ -5,7 +5,7 @@
 
 # bash
 if [ ! -e ~/.bash_logout ]; then ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout fi
-if [ ln -s ~/.dotfiles/dot.bash_profile		~/.bash_profile
+ln -s ~/.dotfiles/dot.bash_profile		~/.bash_profile
 ln -s ~/.dotfiles/dot.bashrc			~/.bashrc
 
 # git

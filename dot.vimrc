@@ -17,3 +17,8 @@ nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
 
 " Colour scheme
 colorscheme koehler
+
+" Syntax highlighting
+filetype plugin indent on
+syntax on
+
