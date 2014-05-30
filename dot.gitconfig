@@ -8,4 +8,6 @@
 [push]
 	default = matching
 [core]
-        excludesfile = /home/ssd/.gitignore
+	excludesfile = /home/ssd/.gitignore
+[alias]
+
