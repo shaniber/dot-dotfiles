@@ -46,6 +46,7 @@ source ~/.git-prompt
 
 # (yes, it's because I'm a clumsy typist)
 alias ls-la='ls -la'
+alias ds='date +%Y%m%d%H%M%S'
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
