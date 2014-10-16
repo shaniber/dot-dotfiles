@@ -4,15 +4,31 @@
 # Simple set up script to link dotfiles in a new environment.
 
 # bash
-if [ ! -e ~/.bash_logout ]; then ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout fi
-ln -s ~/.dotfiles/dot.bash_profile		~/.bash_profile
-ln -s ~/.dotfiles/dot.bashrc			~/.bashrc
+if [[ ! -e ~/.bash_logout ]]; then 
+	ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
+fi
+if [[ ! -e ~/.bash_profile ]]; then
+	ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
+fi
+if [[ ! -e ~/.bashrc ]]; then
+	ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
+fi
 
 # git
-ln -s ~/.dotfiles/dot.git-completion	~/.git-completion
-ln -s ~/.dotfiles/dot.gitconfig			~/.gitconfig
-ln -s ~/.dotfiles/dot.git-prompt		~/.git-prompt
-ln -s ~/.dotfiles/dot.gitignore			~/.gitignore 
+if [[ ! -e ~/.git-completion ]]; then
+	ln -s ~/.dotfiles/dot.git-completion ~/.git-completion
+fi
+if [[ ! -e ~/.gitconfig ]]; then
+	ln -s ~/.dotfiles/dot.gitconfig ~/.gitconfig
+fi
+if [[ ! -e ~/.git-prompt ]]; then
+	ln -s ~/.dotfiles/dot.git-prompt ~/.git-prompt
+fi
+if [[ ! -e ~/.gitignore ]]; then
+	ln -s ~/.dotfiles/dot.gitignore ~/.gitignore 
+fi
 
 # vim
-ln -s ~/.dotfiles/dot.vimrc				~/.vimrc
+if [[ ! -e ~/.vimrc ]]; then
+	ln -s ~/.dotfiles/dot.vimrc ~/.vimrc
+fi

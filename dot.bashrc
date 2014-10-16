@@ -20,8 +20,16 @@ dashes="\$(s=\$(printf "%*s" 3); echo \${s// /―})"
 
 noColour='\e[0m'
 
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == "Linux" ]]; then
+	platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+	platform='osx'
+fi
+
 case `hostname` in 
-gallifrey*)
+stan*)
 	hostColour="${cyan}"
 	;;
 tardis*)
@@ -44,8 +52,19 @@ fi
 source ~/.git-completion
 source ~/.git-prompt
 
-# (yes, it's because I'm a clumsy typist)
+case "$platform" in 
+linux)
+	;;
+osx)
+	alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
+	alias flushdns='sudo killall -HUP mDNSResponder'
+	;;
+esac
+
 alias ls-la='ls -la'
+alias v='vagrant'
+alias ds='date +%Y%m%d%H%M%S'
+	
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
