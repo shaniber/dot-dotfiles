@@ -65,7 +65,6 @@ alias ls-la='ls -la'
 alias v='vagrant'
 alias ds='date +%Y%m%d%H%M%S'
 	
-
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
 
