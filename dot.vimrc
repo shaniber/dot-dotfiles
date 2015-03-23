@@ -4,21 +4,21 @@
 " http://vim.wikia.com/wiki/Keep_your_vimrc_file_clean
 
 """ Vundle
-set nocompatible
-filetype off
+"set nocompatible
+"filetype off
 
 " set the runtime path to include Vundle and initialize.
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 
 " let Vundle manage itself.
-Plugin 'gmarik/Vundle'
+"Plugin 'gmarik/Vundle'
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'flazz/vim-colorschemes'
 
-call vundle#end()
-filetype plugin indent on
+"call vundle#end()
+"filetype plugin indent on
 
 
 """ Tabs
