@@ -1,0 +1,12 @@
+#
+# functions - simple functions for added FUNctionality.
+#
+
+# dgrep - simple function to grep for DHCP leases.
+function dgrep () {
+	if [ $# != 1 ]; then 
+		echo "Please specify one argument, a hostname to search for." 
+	else
+		grep -i -A 1 -B 8 $1 /var/lib/dhcpd/dhcpd.leases
+	fi
+}
