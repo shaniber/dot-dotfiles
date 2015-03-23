@@ -51,6 +51,7 @@ fi
 # User specific aliases and functions
 source ~/.git-completion
 source ~/.git-prompt
+source ~/.dotfiles/functions
 
 case "$platform" in 
 linux)
