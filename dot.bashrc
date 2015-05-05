@@ -38,6 +38,9 @@ tardis*)
 dexter*)
 	hostColour="${yellow}"
 	;;
+*test*)
+    hostColour="${red}"
+    ;;
 *)
 	hostColour="${lpurple}"
 	;;
