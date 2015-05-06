@@ -91,7 +91,7 @@ linux|vt*)
 esac
 
 # User specific environment and startup programs
-PATH=$PATH:$HOME/bin
+PATH=$PATH:/sbin:/usr/sbin:$HOME/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 
