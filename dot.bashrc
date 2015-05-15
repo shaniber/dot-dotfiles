@@ -55,6 +55,7 @@ source ~/.dotfiles/functions
 
 case "$platform" in 
 linux)
+	. ~/.dotfiles/functions.linux
 	;;
 osx)
 	alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
@@ -69,6 +70,7 @@ esac
 alias ls-la='ls -la'
 alias v='vagrant'
 alias ds='date +%Y%m%d%H%M%S'
+alias alldu='du -sch .[!.]* *'
 	
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
