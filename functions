@@ -10,3 +10,36 @@ function dgrep () {
 		grep -i -A 1 -B 8 $1 /var/lib/dhcpd/dhcpd.leases
 	fi
 }
+
+
+# extract - extract many common archives.
+extract() {
+	if [ -f "$1" ] ; then
+		case "$1" in
+			*.tar.bz2) tar xjf "$1" ;;
+			*.tar.gz) tar xzf "$1" ;;
+			*.tar.Z) tar xzf "$1" ;;
+			*.bz2) bunzip2 "$1" ;;
+			*.rar) unrar x "$1" ;;
+			*.gz) gunzip "$1" ;;
+			*.jar) unzip "$1" ;;
+			*.tar) tar xf "$1" ;;
+			*.tbz2) tar xjf "$1" ;;
+			*.tgz) tar xzf "$1" ;;
+			*.zip) unzip "$1" ;;
+			*.Z) uncompress "$1" ;;
+			*) echo "'$1' cannot be extracted." ;;
+		esac
+	else
+		echo "'$1' is not a file."
+	fi
+}
+
+# itiof - Is the Internet on fire? Check for the latest big security scapre.
+itiof() {
+	RESPONSE=$(dig +short txt istheinternetonfire.com | sed -e 's/\\; /\n/' -e 's/"//'g  -e 's/"//'g -e 's/  / /g' -e 's/\n/ /g')
+	YELLOW='\033[1;33m'
+	RED='\033[0;31m'
+	NC='\033[0m'
+	echo -e "${YELLOW}Is the Internet on fire yet?\n\n  ${RED} $RESPONSE${NC}\n"
+}
