@@ -63,10 +63,7 @@ linux)
 osx)
 	alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
 	alias flushdns='sudo killall -HUP mDNSResponder'
-	# Quicklook given file
-	ql () {
-		qlmanage -p $* 2>/dev/null
-	}
+	. ~/.dotfiles/functions.osx
 	;;
 esac
 

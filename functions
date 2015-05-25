@@ -43,3 +43,15 @@ itiof() {
 	NC='\033[0m'
 	echo -e "${YELLOW}Is the Internet on fire yet?\n\n  ${RED} $RESPONSE${NC}\n"
 }
+
+# mdcat - parse and display MarkDown files on the command line, in a man-like format.
+mdcat() {
+	if [ "$#" -ne 1 ]
+	then 
+		echo " ** mdcat takes a single argument, then name of a file in Markdown format. **"
+		return 1
+	fi
+
+	command -v pandoc >/dev/null 2>&1 || { echo " ** Pandoc is not installed. Cannot continue. Aborting. ** "; return 1; }
+	pandoc -s -f markdown -t man $@ | groff -T utf8 -man | less 
+}
