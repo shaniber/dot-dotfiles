@@ -1,0 +1,6 @@
+#!/bin/bash
+
+## A post-commit hook to dump the current hash into the 
+## .gitignored VERSION file.
+
+git rev-parse HEAD > VERSION
