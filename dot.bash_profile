@@ -8,3 +8,6 @@ fi
 # User specific environment and startup programs
 PATH=$PATH:$HOME/bin
 export PATH
+
+# Check the version of the dot.files and see if it's the latest.
+. ~/.dotfiles/setup/check_version.sh
