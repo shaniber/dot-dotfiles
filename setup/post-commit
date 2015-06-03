@@ -3,5 +3,5 @@
 ## A post-commit hook to dump the current hash into the 
 ## .gitignored VERSION file.
 
-echo -e "  + \033[1m`git rev-parse HEAD`\033[0m."
+echo -e "  + \033[1m`git rev-parse HEAD`\033[0m is the current commit."
 git rev-parse HEAD > VERSION
