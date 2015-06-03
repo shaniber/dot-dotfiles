@@ -4,5 +4,10 @@
 
 # Quicklook given file
 ql () {
-	qlmanage -p $* >/dev/null 2>&1
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: ql filename [filename filename filename]"
+		echo "    where filename(s) is the name a file to open with QuickLook."
+	else 
+		qlmanage -p $* >/dev/null 2>&1
+	fi
 }

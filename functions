@@ -4,34 +4,44 @@
 
 # dgrep - simple function to grep for DHCP leases.
 function dgrep () {
-	if [ $# != 1 ]; then 
-		echo "Please specify one argument, a hostname to search for." 
+	if [ "$#" -ne 1 ]; then 
+		echo "Usage: dgrep hostname"
+		echo "    note that dgrep assumes /var/lib/dhcpd/dhcpd.leases"
 	else
-		grep -i -A 1 -B 8 $1 /var/lib/dhcpd/dhcpd.leases
+		if [ -f /var/lib/dhcpd/dhcpd.leases ]; then 
+			grep -i -A 1 -B 8 $1 /var/lib/dhcpd/dhcpd.leases
+		else 
+			echo " ** /var/lib/dhcpd/dhcpd.leases does not exist. **"
+		fi
 	fi
 }
 
 
 # extract - extract many common archives.
 extract() {
-	if [ -f "$1" ] ; then
-		case "$1" in
-			*.tar.bz2) tar xjf "$1" ;;
-			*.tar.gz) tar xzf "$1" ;;
-			*.tar.Z) tar xzf "$1" ;;
-			*.bz2) bunzip2 "$1" ;;
-			*.rar) unrar x "$1" ;;
-			*.gz) gunzip "$1" ;;
-			*.jar) unzip "$1" ;;
-			*.tar) tar xf "$1" ;;
-			*.tbz2) tar xjf "$1" ;;
-			*.tgz) tar xzf "$1" ;;
-			*.zip) unzip "$1" ;;
-			*.Z) uncompress "$1" ;;
-			*) echo "'$1' cannot be extracted." ;;
-		esac
+	if [ "$#" -ne 1 ]; then
+		echo "Usage: extract filename.xxx"
+		echo "    where xxx is one of many popular archival format file extensions."
 	else
-		echo "'$1' is not a file."
+		if [ -f "$1" ] ; then
+			case "$1" in
+				*.tar.bz2) tar xjf "$1" ;;
+				*.tar.gz) tar xzf "$1" ;;
+				*.tar.Z) tar xzf "$1" ;;
+				*.bz2) bunzip2 "$1" ;;
+				*.rar) unrar x "$1" ;;
+				*.gz) gunzip "$1" ;;
+				*.jar) unzip "$1" ;;
+				*.tar) tar xf "$1" ;;
+				*.tbz2) tar xjf "$1" ;;
+				*.tgz) tar xzf "$1" ;;
+				*.zip) unzip "$1" ;;
+				*.Z) uncompress "$1" ;;
+				*) echo " ** '$1' cannot be extracted. **" ;;
+			esac
+		else
+			echo " ** '$1' is not a file. **"
+		fi
 	fi
 }
 
@@ -48,10 +58,9 @@ itiof() {
 mdcat() {
 	if [ "$#" -ne 1 ]
 	then 
-		echo " ** mdcat takes a single argument, then name of a file in Markdown format. **"
-		return 1
+		echo "Usage: mdcat filename.md"
+	else 
+		command -v pandoc >/dev/null 2>&1 || { echo " ** Pandoc is not installed. Cannot continue. Aborting. ** "; return 1; }
+		pandoc -s -f markdown -t man $@ | groff -T utf8 -man | less 
 	fi
-
-	command -v pandoc >/dev/null 2>&1 || { echo " ** Pandoc is not installed. Cannot continue. Aborting. ** "; return 1; }
-	pandoc -s -f markdown -t man $@ | groff -T utf8 -man | less 
 }
