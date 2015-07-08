@@ -32,3 +32,12 @@ fi
 if [[ ! -e ~/.vimrc ]]; then
 	ln -s ~/.dotfiles/dot.vimrc ~/.vimrc
 fi
+
+if [[ ! -e ~/.vim ]]; then
+	ln -s ~/.dotfiles/dot.vim ~/.vim
+else if [[ ! -e ~/.vim/colors ]]; then
+	ln -s ~/.dotfiles/dot.vim/colors ~/.vim/colors
+fi fi
+
+
+
