@@ -3,7 +3,7 @@
 ## Compare the local and remote revisions to make sure that local
 ## is up-to-date.
 
-`cd ~/.dotfiles && git fetch`
+`cd ~/.dotfiles && git fetch >> /dev/null 2>&1`
 
 localversion=`cd ~/.dotfiles && git rev-parse HEAD`
 remoteversion=`cd ~/.dotfiles/ && git rev-parse origin/master`
