@@ -36,7 +36,7 @@ nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
 
 
 """ Colour scheme
-colorscheme koehler
+colorscheme shaniber
 
 
 """ Syntax highlighting
