@@ -95,33 +95,32 @@ linux|vt*)
 esac
 
 # SSH agent set up.
-SSH_ENV="$HOME/.ssh/environment"
+SSH_ENV="${HOME}/.ssh/environment"
 
-function start_agent {
-	echo "Initialising new SSH agent..."
-	/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-	echo succeeded
-	chmod 600 "${SSH_ENV}"
-	. "${SSH_ENV}" > /dev/null
-	/usr/bin/ssh-add;
-}
+#function start_agent {
+#	echo "Initialising new SSH agent..."
+#	/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#	echo succeeded
+#	chmod 600 "${SSH_ENV}"
+#	. "${SSH_ENV}" > /dev/null
+#	/usr/bin/ssh-add;
+#}
 
-# Source SSHS settings if application.
-if [ -f "${SSH_ENV}" ]; then
-	. "${SSH_ENV}" > /dev/null
-	ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-		start_agent
-	}
-else
-	start_agent
-fi
+## Source SSHS settings if application.
+#if [ -f "${SSH_ENV}" ]; then
+#	. "${SSH_ENV}" > /dev/null
+#	ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#		start_agent
+#	}
+#else
+#	start_agent
+#fi
 
 # User specific environment and startup programs
-PATH=$PATH:/sbin:/usr/sbin:$HOME/bin
+PATH=$PATH:/sbin:/usr/sbin:${HOME}/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 
-#PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\e[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
 PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\x1B[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
 
 export PS1 PATH VISUAL EDITOR PROMPT_COMMAND
