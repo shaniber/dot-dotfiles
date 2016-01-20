@@ -11,3 +11,15 @@ ql () {
 		qlmanage -p $* >/dev/null 2>&1
 	fi
 }
+
+# Show all normally hidden files in finder.
+saf () {
+	defaults write com.apple.finder AppleShowAllFiles YES
+	killall Finder
+}
+
+# Hide all normally hidden files in finder.
+haf () {
+	defaults write com.apple.finder AppleShowAllFiles NO
+	killall Finder
+}
