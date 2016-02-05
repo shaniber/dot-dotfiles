@@ -54,16 +54,16 @@ fi
 # User specific aliases and functions
 source ~/.git-completion
 source ~/.git-prompt
-source ~/.dotfiles/functions
+source ~/.dotfiles/functions/functions.gen
 
 case "$platform" in 
 linux)
-	. ~/.dotfiles/functions.linux
+	. ~/.dotfiles/functions/functions.linux
 	;;
 osx)
 	alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
 	alias flushdns='sudo killall -HUP mDNSResponder'
-	. ~/.dotfiles/functions.osx
+	. ~/.dotfiles/functions/functions.osx
 	;;
 esac
 
@@ -126,7 +126,7 @@ PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\x1B[37;44mRETU
 # Include any local configurations.
 if [ -f ~/.bash_local ]
 then 
-    . .bash_local
+    . ~/.bash_local
 fi
 
 export PS1 PATH VISUAL EDITOR PROMPT_COMMAND
