@@ -76,6 +76,7 @@ alias dumphttpget="sudo tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47
 alias dumphttppost="sudo tcpdump -s 0 -A 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354)'"
 alias sigh='sudo $(history -p \!\!)' 
 alias noc='egrep -v "^\s*(#|$)"'
+alias grep='grep --colour=always'
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
@@ -120,6 +121,7 @@ SSH_ENV="${HOME}/.ssh/environment"
 PATH=$PATH:/sbin:/usr/sbin:${HOME}/bin
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
+GREP_COLORS='fn=1;32'
 
 PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then echo -e "\033[1m\x1B[37;44mRETURN:\033[0m \033[01;34m$ret\033[00;00m"; fi'
 
@@ -129,4 +131,4 @@ then
     . ~/.bash_local
 fi
 
-export PS1 PATH VISUAL EDITOR PROMPT_COMMAND
+export PS1 PATH VISUAL EDITOR PROMPT_COMMAND GREP_COLORS
