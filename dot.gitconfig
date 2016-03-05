@@ -11,3 +11,5 @@
 	excludesfile = /home/ssd/.gitignore
 [help]
 	autocorrect = 15
+[pretty]
+	me = "%Cgreen%h%Creset - %C(230)%s%Creset"
