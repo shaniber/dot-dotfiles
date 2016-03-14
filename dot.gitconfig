@@ -1,15 +1,15 @@
-[user]
-	name = Shane Doucette
-	email = sd@zu.com
 [color]
 	branch = auto
 	diff = auto
 	status = auto
 [push]
 	default = matching
-[core]
-	excludesfile = /home/ssd/.gitignore
 [help]
 	autocorrect = 15
 [pretty]
 	me = "%Cgreen%h%Creset - %C(230)%s%Creset"
+
+# name, email, and excludesfile are in the local file.
+[include]
+	path = ~/.gitconfig_local
+
