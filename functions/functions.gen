@@ -67,5 +67,5 @@ mdcat() {
 
 # pping - coloured timestamped ping
 pping () {
-	ping -Q $1 |  perl -nle 'print "[97m[[94m", scalar(localtime), "[97m][0m ", $_'
+	ping $1 |  perl -nle 'print "[97m[[94m", scalar(localtime), "[97m][0m ", $_'
 }
