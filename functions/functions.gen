@@ -2,21 +2,6 @@
 # functions - simple functions for added FUNctionality.
 #
 
-# dgrep - simple function to grep for DHCP leases.
-function dgrep () {
-	if [ "$#" -ne 1 ]; then 
-		echo "Usage: dgrep hostname"
-		echo "    note that dgrep assumes /var/lib/dhcpd/dhcpd.leases"
-	else
-		if [ -f /var/lib/dhcpd/dhcpd.leases ]; then 
-			grep -i -A 1 -B 8 $1 /var/lib/dhcpd/dhcpd.leases
-		else 
-			echo " ** /var/lib/dhcpd/dhcpd.leases does not exist. **"
-		fi
-	fi
-}
-
-
 # extract - extract many common archives.
 extract() {
 	if [ "$#" -ne 1 ]; then
