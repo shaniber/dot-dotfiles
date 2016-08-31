@@ -4,49 +4,67 @@
 # Simple set up script to link dotfiles in a new environment.
 
 # bash
-if [[ ! -e ~/.bash_logout ]]; then 
-	ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
-else 
+if [[ -e ~/.bash_logout ]]; then 
 	mv ~/.bash_logout ~/.bash_logout.orig
-	ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
+	echo "moved .bash_logout to .bash_logout.orig"
 fi
-if [[ ! -e ~/.bash_profile ]]; then
-	ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
-else
+ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
+
+if [[ -e ~/.bash_profile ]]; then
 	mv ~/.bash_profile ~/.bash_profile.orig
-	ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
+	echo "moved .bash_profile to .bash_profile.orig"
 fi
-if [[ ! -e ~/.bashrc ]]; then
-	ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
-else
+ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
+
+if [[ -e ~/.bashrc ]]; then
 	mv ~/.bashrc ~/.bashrc.orig
-	ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
+	echo "moved .bashrd to .bashrc.orig"
 fi
+ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
 
 # git
-if [[ ! -e ~/.git-completion ]]; then
-	ln -s ~/.dotfiles/dot.git-completion ~/.git-completion
+if [[ -e ~/.git-completion ]]; then
+	mv ~/.git-completion ~/.git-completion.orig
+	echo "moved .git-completion to .git-completion.orig"
 fi
-if [[ ! -e ~/.gitconfig ]]; then
-	ln -s ~/.dotfiles/dot.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/dot.git-completion ~/.git-completion
+
+if [[ -e ~/.gitconfig ]]; then
+	mv ~/.git-config ~/.git-config.orig
+	ln -s ~/.git-configorig ~/.git-config.local
+	echo "moved .git-completion to .git-completion.orig, and symlinked it to .git-config.local"
 fi
-if [[ ! -e ~/.git-prompt ]]; then
-	ln -s ~/.dotfiles/dot.git-prompt ~/.git-prompt
+ln -s ~/.dotfiles/dot.gitconfig ~/.gitconfig
+
+if [[ -e ~/.git-prompt ]]; then
+	mv ~/.git-prompt ~/.git-prompt.orig
+	echo "moved .git-prompt to .git-prompt.orig"
 fi
-if [[ ! -e ~/.gitignore ]]; then
-	ln -s ~/.dotfiles/dot.gitignore ~/.gitignore 
+ln -s ~/.dotfiles/dot.git-prompt ~/.git-prompt
+
+if [[ -e ~/.gitignore ]]; then
+	mv ~/.gitignore ~/.gitignore.orig
+	echo "moved .gitignore to .gitignore.orig"
 fi
 
 # vim
-if [[ ! -e ~/.vimrc ]]; then
-	ln -s ~/.dotfiles/dot.vimrc ~/.vimrc
+if [[ -e ~/.vimrc ]]; then
+	mv ~/.vimrc ~/.vimrc.orig
+	echo "moved .vimrc to .vimrc.orig"
 fi
+ln -s ~/.dotfiles/dot.vimrc ~/.vimrc
 
-if [[ ! -e ~/.vim ]]; then
-	ln -s ~/.dotfiles/dot.vim ~/.vim
-else if [[ ! -e ~/.vim/colors ]]; then
-	ln -s ~/.dotfiles/dot.vim/colors ~/.vim/colors
-fi fi
+if [[ -e ~/.vim ]] ; then
+	mv ~/.vim ~/.vim.orig
+	echo "moved .vim to .vim.orig"
+fi
+ln -s ~/.dotfiles/dot.vim ~/.vim
+
+#if [[ ! -e ~/.vim ]]; then
+#	ln -s ~/.dotfiles/dot.vim ~/.vim
+#else if [[ ! -e ~/.vim/colors ]]; then
+#	ln -s ~/.dotfiles/dot.vim/colors ~/.vim/colors
+#fi fi
 
 
 
