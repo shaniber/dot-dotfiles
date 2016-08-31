@@ -6,11 +6,20 @@
 # bash
 if [[ ! -e ~/.bash_logout ]]; then 
 	ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
+else 
+	mv ~/.bash_logout ~/.bash_logout.orig
+	ln -s ~/.dotfiles/dot.bash_logout ~/.bash_logout 
 fi
 if [[ ! -e ~/.bash_profile ]]; then
 	ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
+else
+	mv ~/.bash_profile ~/.bash_profile.orig
+	ln -s ~/.dotfiles/dot.bash_profile ~/.bash_profile
 fi
 if [[ ! -e ~/.bashrc ]]; then
+	ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
+else
+	mv ~/.bashrc ~/.bashrc.orig
 	ln -s ~/.dotfiles/dot.bashrc ~/.bashrc
 fi
 
