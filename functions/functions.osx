@@ -1,8 +1,7 @@
-###
-# Bash functions that only work on OS X machines.
-#
+## Bash functions that only work on OS X machines.
 
-# Quicklook given file
+## function: ql
+## - quicklook given file via command line
 ql () {
 	if [ "$#" -lt 1 ]; then
 		echo "Usage: ql filename [filename filename filename]"
@@ -12,13 +11,15 @@ ql () {
 	fi
 }
 
-# Show all normally hidden files in finder.
+## function: saf
+## - show all normally hidden files in finder.
 saf () {
 	defaults write com.apple.finder AppleShowAllFiles YES
 	killall Finder
 }
 
-# Hide all normally hidden files in finder.
+## function: haf
+## - hide all normally hidden files in finder.
 haf () {
 	defaults write com.apple.finder AppleShowAllFiles NO
 	killall Finder

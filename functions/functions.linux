@@ -1,7 +1,9 @@
-###
-# Bash functions that only work on Linux machines.
+#
+## Bash functions that only work on Linux machines.
 #
 
+## function: listening
+## - list listening ports.
 function listening {
     if [ "${1}" = "-h" ]; then
         echo "Usage: listening [t|tcp|u|udp] [ps regex]"
