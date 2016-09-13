@@ -2,6 +2,13 @@
 ## Bash functions that only work on Linux machines.
 #
 
+## function: ban
+## - ban 123.456.789.098
+## - ban the specified IP address
+function ban {
+	iptables -I fail2ban-default 1 -p tcp --dport 80 -m string --algo bm --string "X-Forwarded-For: ${1}" -j DROP
+}
+
 ## function: listening
 ## - list listening ports.
 function listening {
