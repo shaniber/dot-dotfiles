@@ -3,14 +3,15 @@
 #
 
 ## function: ban
-## - ban 123.456.789.098
 ## - ban the specified IP address
+##   usage: ban 123.456.789.098
 function ban {
 	iptables -I fail2ban-default 1 -p tcp --dport 80 -m string --algo bm --string "X-Forwarded-For: ${1}" -j DROP
 }
 
 ## function: listening
 ## - list listening ports.
+##   usage: listening [t|tcp|u|ud] [ps regex]
 function listening {
     if [ "${1}" = "-h" ]; then
         echo "Usage: listening [t|tcp|u|udp] [ps regex]"
