@@ -72,13 +72,13 @@ listfuncs() {
 	sed -e 's/^##[:space:]]*//' | 
 	while read line; do
 		if ( echo "${line}" | grep -q '^## - ' ); then
-			eval echo -e $(echo ${line} | sed -e 's/^## \(.*\)/\1/');
+			echo -e $(echo ${line} | sed -e 's/^## \(.*\)/\1/');
 		else if ( echo "$line" | grep -q '^## function: ' ); then
 			eval printf $(echo ${line} | sed -e 's/^## function: \(.*\)/${lcyan}\1${noColour}/');
 			echo
 		else if ( echo "$line" | grep -q '^##   usage:'); then
             printf "  ${magenta}usage:${noColour} "
-			eval echo -e $(echo ${line} | sed -e 's/^## usage: \(.*\)/\1/');
+			echo -e $(echo ${line} | sed -e 's/^## usage: \(.*\)/\1/');
 			echo
 		else 
 			printf "${green}${line}${noColour}\n"
