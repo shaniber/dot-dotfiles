@@ -1,7 +1,11 @@
 ## 
 # .gitignore for dot.dotfiles
 
+# utility files
+VERSION
 # vi[m] swap files
 *~
 *.swp
 *.swo
+# generated files
+dot.vim/.netrwhist

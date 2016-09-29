@@ -46,6 +46,13 @@ if [[ -e ~/.gitignore ]]; then
 	mv ~/.gitignore ~/.gitignore.orig
 	echo "moved .gitignore to .gitignore.orig"
 fi
+ln -s ~/.dotfiles/dot.gitignore ~/.gitignore
+
+if [[ -e ~/.inputrc ]]; then
+	mv ~/.inputrc ~/.inputrc.orig
+	echo "moved .gitignore to .gitignore.orig"
+fi
+ln -s ~/.dotfiles/dot.inputrc ~/.inputrc
 
 # vim
 if [[ -e ~/.vimrc ]]; then
