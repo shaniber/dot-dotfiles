@@ -9,3 +9,5 @@ VERSION
 *.swo
 # generated files
 dot.vim/.netrwhist
+# BS files
+.DS_Store
