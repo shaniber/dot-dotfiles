@@ -3,6 +3,9 @@
 " Global settings for all files (but may be overridden in ~/.vim/ftplugin/*.vim)
 " http://vim.wikia.com/wiki/Keep_your_vimrc_file_clean
 
+" Colour reference: 
+" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+
 """ Vundle
 "set nocompatible
 "filetype off
@@ -45,6 +48,7 @@ syntax on
 
 """ Line numbers
 set number
+highlight LineNr term=bold cterm=NONE ctermfg=250 ctermbg=235 gui=NONE guifg=DarkGrey guibg=NONE
 
 """ Turn off auto commenting
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
