@@ -20,7 +20,8 @@ hi ErrorMsg		  term=standout  cterm=bold  ctermfg=grey  ctermbg=red  guifg=White
 hi Search		  term=reverse  ctermfg=white  ctermbg=red      guifg=white  guibg=Red
 hi MoreMsg		  term=bold  cterm=bold  ctermfg=darkgreen	gui=bold  guifg=SeaGreen
 hi ModeMsg		  term=bold  cterm=bold  gui=bold  guifg=White	guibg=Blue
-hi LineNr		  term=underline  cterm=bold  ctermfg=darkcyan	guifg=Yellow
+"hi LineNr		  term=underline  cterm=bold  ctermfg=darkcyan	guifg=Yellow
+hi LineNr         term=bold cterm=bold ctermfg=250 ctermbg=235 gui=NONE guifg=DarkGrey guibg=NONE
 hi Question		  term=standout  cterm=bold  ctermfg=darkgreen	gui=bold  guifg=Green
 hi StatusLine	  term=bold,reverse  cterm=bold ctermfg=lightblue ctermbg=white gui=bold guifg=blue guibg=white
 hi StatusLineNC   term=reverse	ctermfg=white ctermbg=lightblue guifg=white guibg=blue

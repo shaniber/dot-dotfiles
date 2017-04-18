@@ -48,7 +48,6 @@ syntax on
 
 """ Line numbers
 set number
-highlight LineNr term=bold cterm=NONE ctermfg=250 ctermbg=235 gui=NONE guifg=DarkGrey guibg=NONE
 
 """ Turn off auto commenting
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
