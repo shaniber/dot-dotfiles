@@ -51,3 +51,6 @@ set number
 
 """ Turn off auto commenting
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+""" Other stuff, I guess.
+set ruler
