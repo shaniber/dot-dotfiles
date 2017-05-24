@@ -65,6 +65,7 @@ osx)
 	alias flushdns='sudo killall -HUP mDNSResponder'
 	alias ls="ls -G"
 	. ~/.dotfiles/functions/functions.osx
+    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 	;;
 esac
 

@@ -3,6 +3,17 @@
 ###
 # Simple set up script to link dotfiles in a new environment.
 
+if [[ $(uname) == 'Darwin' ]]; then
+	if [ -f /usr/local/bin/brew ]; then
+		echo "Using 'brew' to install bash-completion."
+		brew install bash-completion
+	else
+		echo "Please install Homebrew, then execute: "
+		echo && echo "    brew install bash-completion" 
+		echo
+	fi
+fi
+
 # bash
 if [[ -e ~/.bash_logout ]]; then 
 	mv ~/.bash_logout ~/.bash_logout.orig
