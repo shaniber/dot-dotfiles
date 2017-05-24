@@ -54,3 +54,5 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 """ Other stuff, I guess.
 set ruler
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set ls=2
