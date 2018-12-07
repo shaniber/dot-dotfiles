@@ -11,3 +11,7 @@ export PATH
 
 # Check the version of the dot.files and see if it's the latest.
 . ~/.dotfiles/setup/check_version.sh
+
+echo;uptime; echo
+
+export PATH="$HOME/.cargo/bin:$PATH"

@@ -52,7 +52,7 @@ if [ -f /etc/bash.bashrc ]; then
 fi
 
 # User specific aliases and functions
-source ~/.git-completion
+#source ~/.git-completion
 source ~/.git-prompt
 source ~/.dotfiles/functions/functions.gen
 
@@ -65,7 +65,9 @@ osx)
 	alias flushdns='sudo killall -HUP mDNSResponder'
 	alias ls="ls -G"
 	. ~/.dotfiles/functions/functions.osx
-    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+	if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+		. /usr/local/share/bash-completion/bash_completion
+	fi
 	;;
 esac
 
@@ -109,7 +111,7 @@ SSH_ENV="${HOME}/.ssh/environment"
 #	/usr/bin/ssh-add;
 #}
 
-## Source SSHS settings if application.
+## Source SSH settings if applicable.
 #if [ -f "${SSH_ENV}" ]; then
 #	. "${SSH_ENV}" > /dev/null
 #	ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
@@ -134,3 +136,4 @@ then
 fi
 
 export PS1 PATH VISUAL EDITOR PROMPT_COMMAND GREP_COLORS
+
