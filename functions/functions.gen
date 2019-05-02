@@ -61,6 +61,15 @@ pping () {
 	ping $@ |  perl -nle 'print "[97m[[94m", scalar(localtime), "[97m][0m ", $_'
 }
 
+## function: whatismyip
+## - return external IP address from ipify.org.
+##   usage: whatismyip
+whatismyip() {
+# TODO: JSON formatting.
+	ipaddress=$(curl -s 'https://api.ipify.org')
+	printf "${lcyan}External IP address: ${green}${ipaddress}${noColour}\n";	
+}
+
 ## function: listfuncs 
 ## - list available custom functions.
 ##   usage: listfuncs

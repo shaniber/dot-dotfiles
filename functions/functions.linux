@@ -10,7 +10,7 @@ function ban {
 }
 
 ## function: listening
-## - list listening ports.
+## - list listening ports, Linux version.
 ##   usage: listening [t|tcp|u|ud] [ps regex]
 function listening {
     if [ "${1}" = "-h" ]; then
