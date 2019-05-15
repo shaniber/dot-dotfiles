@@ -62,7 +62,7 @@ linux)
 	;;
 osx)
 	alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
-	alias flushdns='sudo killall -HUP mDNSResponder'
+	alias flushdns='sudo killall -HUP mDNSResponder; sleep 2; echo macOS DNS Cache is reset.'
 	alias ls="ls -G"
 	. ~/.dotfiles/functions/functions.osx
 	if [ -f /usr/local/share/bash-completion/bash_completion ]; then
