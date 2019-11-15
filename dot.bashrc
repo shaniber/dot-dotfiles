@@ -78,7 +78,7 @@ alias alldu='du -sck .[!.]* *'
 alias dumphttp="sudo tcpdump -A -s 0 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'"	
 alias dumphttpget="sudo tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'"
 alias dumphttppost="sudo tcpdump -s 0 -A 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354)'"
-alias sigh='sudo $(history -p \!\!)' 
+alias pls='sudo $(history -p \!\!)' 
 alias noc='egrep -v "^\s*(#|$)"'
 alias grep='grep --colour=always'
 

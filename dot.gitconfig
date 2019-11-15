@@ -2,16 +2,26 @@
 	branch = auto
 	diff = auto
 	status = auto
+
 [push]
 	default = simple
+
 [help]
 	autocorrect = 15
+
 [pretty]
 	me = "%Cgreen%h%Creset - %C(230)%s%Creset"
+
+[alias]
+	sync="! git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 # name, email, and excludesfile are in the local file.
 [include]
 	path = ~/.gitconfig_local
 
-[alias]
-	sync="! git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
