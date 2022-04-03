@@ -196,7 +196,7 @@ function util::confirm_requirements() {
     
     ## Install coreutils
     util::debug "Installing coreutils"
-    if ! "${brew_bin}"/brew list | /usr/bin/grep -q "coreutils" &>/dev/null ; then 
+    if ! "${brew_bin}"/brew list | /usr/bin/grep "coreutils" &>/dev/null ; then 
       if ! "${brew_bin}"/brew install coreutils ; then 
         util::error "Homebrew coreutils installation failed. Bailing out!"
         exit 74
