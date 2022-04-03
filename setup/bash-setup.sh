@@ -196,9 +196,11 @@ function util::confirm_requirements() {
     
     ## Install coreutils
     util::debug "Installing coreutils"
-    if ! "${brew_bin}"/brew install coreutils ; then 
-      util::error "Homebrew coreutils installation failed. Bailing out!"
-      exit 74
+    if ! "${brew_bin}"/brew list | /usr/bin/grep -q "coreutils" &>/dev/null ; then 
+      if ! "${brew_bin}"/brew install coreutils ; then 
+        util::error "Homebrew coreutils installation failed. Bailing out!"
+        exit 74
+      fi
     fi
 
     ## Architecture specific path for readlink.
@@ -221,7 +223,7 @@ function install_config () {
     util::print "         (Preserving existing at .${dotfile}.bak-${ds}\n"
     mv "${HOME}/.${dotfile}" "${HOME}/.${dotfile}.bak-${ds}"
   else 
-    if ${readlink} "${HOME}/.${dotfile}" | grep -q "${dotfiles_prefix}/dot.${dotfile}" ; then
+    if ${readlink} "${HOME}/.${dotfile}" | /usr/bin/grep -q "${dotfiles_prefix}/dot.${dotfile}" ; then
       util::warn ".${dotfile} exists and point to the expected installation directory. Skipping..."
     else 
       ln -s "${dotfiles_prefix}/dot.${dotfile}" "${HOME}/.${dotfile}"
@@ -249,7 +251,7 @@ if [ "${PWD}" != "${dotfiles_prefix}" ] ; then
   if [ -L "${dotfiles_prefix}" ] || [ -d "${dotfiles_prefix}" ] ; then
     # Check if the README exists and if it is our readme file.
     if [ -f "${dotfiles_prefix}/README.md" ] ; then
-      if ! grep -Fxq "# dot.dotfiles" "${dotfiles_prefix}/README.md" ; then
+      if ! /usr/bin/grep -Fxq "# dot.dotfiles" "${dotfiles_prefix}/README.md" ; then
         util::error "${dotfiles_prefix} exists, but has unexpected content. Bailing out!"
         exit 2
       else 
