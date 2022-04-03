@@ -105,7 +105,7 @@ function util::confirm() {
 
 ## Usage.
 function util::usage() {
-  util::print "\nUsage: setup/bash-setup.sh \n\n"
+  util::print "\nUsage: setup/bash-setup.sh \n"
 }
 
 ## Check for script tool requirements.
@@ -310,8 +310,6 @@ if [ "${PWD}" != "${dotfiles_prefix}" ] ; then
     fi
   fi
 fi
-
-exit 99
 
 ## Install bash completion
 if [ "$(uname)" = "Darwin" ]; then
