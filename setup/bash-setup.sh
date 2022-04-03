@@ -137,7 +137,7 @@ function util::confirm_requirements() {
   util::print "         If you do not have sudo access, there may be some actions that you cannot perform.\n"
   util::print "         These are not required for setup completion, just useful.\n"
   util::print "         You may be prompted for your password in the next step.\n\n"
-  util::print "         ${green}Elevating privileges now...${noColour}\n"
+  util::print "         ${green}Elevating privileges now...${noColour}\n\n"
   if sudo -v > /dev/null ; then 
     sudoer="YES"
   else 
@@ -216,6 +216,32 @@ function util::confirm_requirements() {
       util::error "${orange}readlink${noColour} is not installed, or not on your path. \\nThere is something odd with your setup. Please check it, and try again."
     fi
   fi
+
+  ## Make sure the dot files are available in an expected spot.
+  util::debug "Checking if ${dotfiles_prefix} exists and is in an expected state."
+  if [ "${PWD}" != "${dotfiles_prefix}" ] ; then
+    # check to make sure the ${HOME}/.dotfiles path doesn't already exist.
+    if [ -L "${dotfiles_prefix}" ] || [ -d "${dotfiles_prefix}" ] ; then
+      # Check if the README exists and if it is our readme file.
+      if [ -f "${dotfiles_prefix}/README.md" ] ; then
+        if ! /usr/bin/grep -Fxq "# dot.dotfiles" "${dotfiles_prefix}/README.md" ; then
+          util::error "${dotfiles_prefix} exists, but has unexpected content. Bailing out!"
+          exit 2
+        else 
+          util::debug "Looks like ${dotfiles_prefix} is in good shape. Let's go!"
+        fi
+      else
+        util::error "${dotfiles_prefix} exists, but is in an unexpected state. Bailing out!"
+        exit 3
+      fi
+    else 
+      util::print "${blue}[ACTION]${noColour} Creating ${dotfiles_prefix} symlink in ${HOME}.\n"
+      if ! ln -s "${PWD}" "${dotfiles_prefix}" ; then
+        util::error "The symlink ${dotfiles_prefix} » ${PWD} could not be created. Bailing out!"
+        exit 1
+      fi
+    fi
+  fi
 } 
 
 function install_config () {
@@ -281,54 +307,33 @@ util::debug "        brew_bin:     ${brew_bin}"
 util::debug "Software Versions to install:"
 util::debug "        bash completion: ${bash_completion_version}"
 
-util::confirm_requirements
-
 util::print "Setting up the ${red}D${orange}O${yellow}T${green}F${cyan}I${blue}L${magenta}E${white}S${noColour}!\n"
 
-## Make sure the dot files are available in an expected spot.
-util::debug "Checking if ${dotfiles_prefix} exists and is in an expected state."
-if [ "${PWD}" != "${dotfiles_prefix}" ] ; then
-  # check to make sure the ${HOME}/.dotfiles path doesn't already exist.
-  if [ -L "${dotfiles_prefix}" ] || [ -d "${dotfiles_prefix}" ] ; then
-    # Check if the README exists and if it is our readme file.
-    if [ -f "${dotfiles_prefix}/README.md" ] ; then
-      if ! /usr/bin/grep -Fxq "# dot.dotfiles" "${dotfiles_prefix}/README.md" ; then
-        util::error "${dotfiles_prefix} exists, but has unexpected content. Bailing out!"
-        exit 2
-      else 
-        util::debug "Looks like ${dotfiles_prefix} is in good shape. Let's go!"
-      fi
-    else
-      util::error "${dotfiles_prefix} exists, but is in an unexpected state. Bailing out!"
-      exit 3
-    fi
-  else 
-    util::print "No ${dotfiles_prefix} symlink exists. Creating..."
-    if ! ln -s "${PWD}" "${dotfiles_prefix}" ; then
-      util::error "The symlink ${dotfiles_prefix} » ${PWD} could not be created. Bailing out!"
-      exit 1
-    fi
-  fi
-fi
+util::confirm_requirements
+
+## -=-=-= MAIN SCRIPT =-=-=- ##
 
 ## Install bash completion
 if [ "$(uname)" = "Darwin" ]; then
   util::debug "Checking for bash-completion@2 installation"
   if ! [ -f "${brew_prefix}"/etc/profile.d/bash_completion.sh ] ; then
-    if [ -f "${brew_bin}"/brew ]; then
-      util::print "Using 'brew' to install bash-completion@2."
-      "${brew_bin}"/brew install bash-completion@2
-    else
-      if [ "${sudoer}" ] ; then 
-        util::print "${orange}[TODO]${noColour} Install bash-completion manually.\n"
-      else 
-        util::warn "Cannot install bash-completion@2. Please install manually."
+    util::print "${orange}[INFO]${noColour} bash-completion v2 is not required, but is recommended."
+    if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
+      if [ -f "${brew_bin}"/brew ]; then
+        util::print "Using 'brew' to install bash-completion@2."
+        "${brew_bin}"/brew install bash-completion@2
+      else
+        if [ "${sudoer}" ] ; then 
+          util::print "${orange}[TODO]${noColour} Install bash-completion manually.\n"
+        else 
+          util::warn "Cannot install bash-completion@2. Please install manually."
+        fi
       fi
+    else
+      util::print "${orange}[INFO]${noColour} Skipping installation of bash-completion.\n"
     fi
   fi
 fi
-
-## -=-=-= MAIN SCRIPT =-=-=- ##
 
 ## Create local config files if needed.
 create_local_config_file "bash_profile_local"
