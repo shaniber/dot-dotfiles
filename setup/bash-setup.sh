@@ -231,6 +231,45 @@ function install_config () {
       ln -s "${dotfiles_prefix}/dot.${dotfile}" "${HOME}/.${dotfile}"
     fi
   fi
+  sleep 1
+}
+
+function create_local_config_file () {
+  configfile="${1}"
+  util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}.\n"
+  if [ -f "${HOME}/.${configfile}" ] ; then 
+    if ! util::config "${HOME}/.${configfile} exists. Continue to use it?" ; then 
+      util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile} as ${green}.${configfile}.bak-${ds}${noColour}\n"
+      mv "${HOME}/.${configfile}" "${HOME}/.${configfile}.bak-${ds}"
+    else 
+      util::print "${blue}[ACTION]${noColour} Retaining existing .${configfile}.\n"
+    fi
+  else 
+    util::print "${blue}[ACTION]${noColour} Creating empty .${configfile}.\n"
+    touch "${HOME}/.${configfile}"
+  fi
+  sleep 1
+}
+
+function download_git_completion () {
+  gcfile="${1}"
+  util::print "${blue}[ACTION]${noColour} Checking for existing ${gcfile}.bash.\n"
+  if [ -f "${HOME}/.${gcfile}.bash" ] ; then 
+    if ! util::config "${HOME}/.${gcfile}.bash exists. Continue to use it?" ; then 
+      util::print "${blue}[ACTION]${noColour} Preserving existing .${gcfile}.bash as ${green}.${gcfile}.bash.bak-${ds}${noColour}\n"
+      mv "${HOME}/.${gcfile}" "${HOME}/.${gcfile}.bash.bak-${ds}"
+    else 
+      util::print "${blue}[ACTION]${noColour} Retaining existing .${gcfile}.\n"
+    fi
+  else
+    util::print "${blue}[ACTION]${noColour} Installing ${gcfile}.bash\n"
+    if ! curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/${gcfile}.bash" -o "${HOME}/.${gcfile}.bash" ; then 
+      util::warn "${gcfile} did not download correctly. Please manually confirm this file was installed."
+    else 
+      util::debug "The download of ${gcfile} completed successfully."
+    fi
+  fi
+  sleep 1
 }
 
 util::debug "Script Environment: "
@@ -293,43 +332,30 @@ fi
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
 
-## .bash_profile_local
-util::print "${blue}[ACTION]${noColour} Checking for exising .bash_profile_local.\n"
-if [ -f "${HOME}/.bash_profile_local" ] ; then 
-  if ! util::confirm "${HOME}/.bash_profile_local exists. Continue to use it?" ; then 
-    util::print "${blue}[ACTION]${noColour} Preserving exising .bash_profile_local as  .bash_profile_local.bak-${ds}\n"
-    mv "${HOME}/.bash_profile_local" "${HOME}/.bash_profile_local.bak-${ds}"
-  else 
-    util::print "${blue}[ACTION]${noColour} Retaining exising .bash_profile_local\n"
-  fi
-else
-  touch "${HOME}/.bash_profile_local"
-fi
+## Create local config files if needed.
+create_local_config_file "bash_profile_local"
+create_local_config_file "gitconfig_local"
 
 ## Install dot files proper.
 install_config "bash_profile"
 install_config "bashrc"
 install_config "bash_logout"
-install_config "git-config"
+install_config "gitconfig"
 install_config "gitignore"
 install_config "inputrc"
 install_config "vimrc"
 install_config "vim"
 
-## Install git-completion
-util::print "${blue}[ACTION]${noColour} Installing git-completion.bash\n"
-if [ -f "${HOME}/.git-completion.bash" ] ; then
-  mv "${HOME}"/.git-completion.bash "${HOME}/.git-completion.bash.orig-${ds}"
-fi
-curl "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash" -o "${HOME}/.git-completion.bash"
-### TODO: Check if .bash_profile_local exists, and concatenate the git-completion source to it. 
+## Install git-completion and git-prompt
+download_git_completion "git-completion"
+download_git_completion "git-prompt"
 
 ## Install git-prompt
 util::print "${blue}[ACTION}${noColour} Installing git-prompt.bash\n"
 if [ -f "${HOME}/.git-prompt.sh" ] ; then 
   mv "${HOME}.git-completion.sh" "${HOME}/.git-prompt.sh.orig-${ds}"
 fi
-curl "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh" -o "${HOME}/.git-prompt.bash"
+curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh" -o "${HOME}/.git-prompt.bash"
 ### TODO: Check if .bash_profile_local exists, and concatenate the git-completion source to it. 
 
 util::print "${bold}COMPLETE!${noColour}\n"
