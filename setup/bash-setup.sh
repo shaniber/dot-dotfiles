@@ -151,7 +151,7 @@ function util::confirm_requirements() {
     util::debug "Testing for command line tools."
     if ! /usr/bin/xcode-select -p > /dev/null ; then 
       util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and the script requires them."
-      if util::confirm "${yellow}Proceed with install?${noColour}" ; then 
+      if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
         # TODO: install xcode command line tools
         util::print "${green}Installing command line tools${noColour}..."
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
@@ -175,31 +175,33 @@ function util::confirm_requirements() {
     ## Install homebrew if necessary.
     util::debug "Testing for Homebrew."
     if ! "${brew_bin}"/brew --version > /dev/null ; then
-      if util::confirm "${blue}[ACTION]${noColour} Homebrew isn't installed. Shall I attempt to install it?" ; then 
-        # TODO: install homebrew
-        util::print "${green}Installing Homebrew${noColour}...\n"
+      util::print "${blue}[ACTION]${noColour} Homebrew isn't installed.\n"
+      if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
+        util::print "${blue}[ACTION]${green} Installing Homebrew${noColour}...\n"
         mkdir "${brew_repo}"
         /usr/bin/git clone git@github.com:Homebrew/brew.git "${brew_repo}"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew update --force --quiet
         /bin/chmod -R go-w "${brew_bin}/share/zsh"
       else
-        util::warn "This may result in problems during the setup, and with execution later on."
-        if util::confirm "        ${yellow}Are you sure?${noColour}" ; then
-          util::print "\n${green}Continuing installation without Homebrew${noColour}...\n"
-        else 
-          util::print "\n${magenta}You are clearly confused. Exiting until you sort yourself out.${noColour}\n\n"
-          exit 0
-        fi
+        util::error "Cannot proceed without Homebrew. Bailing out!"
+        exit 99
       fi
     fi
     
     ## Install coreutils
-    util::debug "Installing coreutils"
+    util::debug "Testing for coreutils"
     if ! "${brew_bin}"/brew list | /usr/bin/grep "coreutils" &>/dev/null ; then 
-      if ! "${brew_bin}"/brew install coreutils ; then 
-        util::error "Homebrew coreutils installation failed. Bailing out!"
-        exit 74
+      util::print "${blue}[ACTION]${noColour}Coreutils isn't installed.\n"
+      if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
+        util::print "${blue}[ACTION]${green} Installing coreutils via brew${noColour}..."
+        if ! "${brew_bin}"/brew install coreutils ; then 
+          util::error "Homebrew coreutils installation failed. Bailing out!"
+          exit 74
+        fi
+      else 
+        util::error "Cannot proceed without coreutils. Bailing out!"
+        exit 88
       fi
     fi
 
