@@ -279,17 +279,17 @@ function create_local_config_file () {
 
 function download_git_completion () {
   gcfile="${1}"
-  util::print "${blue}[ACTION]${noColour} Checking for existing ${gcfile}.bash.\n"
-  if [ -f "${HOME}/.${gcfile}.bash" ] ; then 
-    if ! util::config "${HOME}/.${gcfile}.bash exists. Continue to use it?" ; then 
-      util::print "${blue}[ACTION]${noColour} Preserving existing .${gcfile}.bash as ${green}.${gcfile}.bash.bak-${ds}${noColour}\n"
-      mv "${HOME}/.${gcfile}" "${HOME}/.${gcfile}.bash.bak-${ds}"
+  util::print "${blue}[ACTION]${noColour} Checking for existing ${gcfile}.\n"
+  if [ -f "${HOME}/.${gcfile}" ] ; then 
+    if ! util::config "${HOME}/.${gcfile} exists. Continue to use it?" ; then 
+      util::print "${blue}[ACTION]${noColour} Preserving existing .${gcfile} as ${green}.${gcfile}.bak-${ds}${noColour}\n"
+      mv "${HOME}/.${gcfile}" "${HOME}/.${gcfile}.bak-${ds}"
     else 
       util::print "${blue}[ACTION]${noColour} Retaining existing .${gcfile}.\n"
     fi
   else
-    util::print "${blue}[ACTION]${noColour} Installing ${gcfile}.bash\n"
-    if ! curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/${gcfile}.bash" -o "${HOME}/.${gcfile}.bash" ; then 
+    util::print "${blue}[ACTION]${noColour} Installing ${gcfile}\n"
+    if ! curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/${gcfile}" -o "${HOME}/.${gcfile}" ; then 
       util::warn "${gcfile} did not download correctly. Please manually confirm this file was installed."
     else 
       util::debug "The download of ${gcfile} completed successfully."
@@ -350,8 +350,8 @@ install_config "vimrc"
 install_config "vim"
 
 ## Install git-completion and git-prompt
-download_git_completion "git-completion"
-download_git_completion "git-prompt"
+download_git_completion "git-completion.bash"
+download_git_completion "git-prompt.sh"
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
