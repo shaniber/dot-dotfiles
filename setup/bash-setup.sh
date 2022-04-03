@@ -353,13 +353,5 @@ install_config "vim"
 download_git_completion "git-completion"
 download_git_completion "git-prompt"
 
-## Install git-prompt
-util::print "${blue}[ACTION}${noColour} Installing git-prompt.bash\n"
-if [ -f "${HOME}/.git-prompt.sh" ] ; then 
-  mv "${HOME}.git-completion.sh" "${HOME}/.git-prompt.sh.orig-${ds}"
-fi
-curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh" -o "${HOME}/.git-prompt.bash"
-### TODO: Check if .bash_profile_local exists, and concatenate the git-completion source to it. 
-
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
