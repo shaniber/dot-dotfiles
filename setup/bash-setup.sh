@@ -146,7 +146,7 @@ function util::confirm_requirements() {
   util::debug "sudo access? ${sudoer}"
 
   ## macOS specific tests.
-  if [ "$os" == "macos" ] ; then 
+  if [ "${os}" == "macos" ] ; then 
     ## Install the macOS command line tools if necessary
     util::debug "Testing for command line tools."
     if ! /usr/bin/xcode-select -p > /dev/null ; then 
@@ -209,7 +209,7 @@ function util::confirm_requirements() {
     readlink="${brew_bin}/greadlink"
   fi
 
-  if [ "$os" == "linux" ] ; then 
+  if [ "${os}" == "linux" ] ; then 
     if type readlink >/dev/null 2>&1 ; then 
       readlink="$(command -v readlink)"
     else 
@@ -360,7 +360,7 @@ download_git_completion "git-completion.bash"
 download_git_completion "git-prompt.sh"
 
 ## Install some useful software
-if [ "${os}" == "Darwin" ] ; then 
+if [ "${os}" == "macos" ] ; then 
   if util::confirm "${orange}[QUERY]${noColour} Install some useful software? " ; then 
     brew_install "bash"                 # bash higher than v3
     brew_install "shellcheck"           # for checking shell scripts
