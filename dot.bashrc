@@ -32,7 +32,7 @@ SSH_ENV="${HOME}/.ssh/environment"
 export SSH_ENV
 
 # Include any local configurations.
-if [ -f ~/.bash_local ]
+if [ -f ~/.bashrc_local ]
 then 
-    . ~/.bash_local
+    . ~/.bashrc_local
 fi

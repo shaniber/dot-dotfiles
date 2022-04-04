@@ -391,6 +391,7 @@ if [ "${os}" == "macos" ] ; then
     brew_install "spotify"              # streaming music
     brew_install "discord"              # discord chat
     brew_install "iterm"                # better terminal program
+    brew_install "pandoc"               # markup format conversion
   fi
 fi
 
