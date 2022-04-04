@@ -44,12 +44,12 @@ readonly lblue lred lgreen yellow lpurple lcyan lgray dgray
 readonly lbluebg
 readonly dashes
 
-platform='unknown'
+os='unknown'
 unamestr=$(uname)
-if [[ "$unamestr" == "Linux" ]]; then
-	platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-	platform='macos'
+if [ "$unamestr" == "Linux" ]; then
+	os='linux'
+elif [ "$unamestr" == 'Darwin' ]; then
+	os='macos'
 fi
 
 case $(hostname) in 
@@ -66,7 +66,7 @@ source "${HOME}/.git-completion.bash"
 source "${HOME}/.git-prompt.sh"
 source "${HOME}/.dotfiles/functions/functions.gen"
 
-case "$platform" in 
+case "$os" in 
 linux)
   . "${HOME}/.dotfiles/functions/functions.linux"
   ;;
