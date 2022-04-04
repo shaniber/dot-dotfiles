@@ -195,7 +195,7 @@ function util::confirm_requirements() {
       util::print "${blue}[ACTION]${noColour}Coreutils isn't installed.\n"
       if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
         util::print "${blue}[ACTION]${green} Installing coreutils via brew${noColour}..."
-        if ! "${brew_bin}"/brew install coreutils ; then 
+        if ! brew_install coreutils ; then 
           util::error "Homebrew coreutils installation failed. Bailing out!"
           exit 74
         fi
@@ -242,7 +242,13 @@ function util::confirm_requirements() {
       fi
     fi
   fi
-} 
+}
+
+function brew_install() {
+  util::print "  ${green}[BREW]${noColour} Installing ${1}.\n"
+  util::debug "Attempting ${brew_bin}/brew install ${1}\n"
+  "${brew_bin}"/brew install "${1}"
+}
 
 function install_config () {
   dotfile="${1}"
@@ -321,7 +327,7 @@ if [ "$(uname)" = "Darwin" ]; then
     if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
       if [ -f "${brew_bin}"/brew ]; then
         util::print "Using 'brew' to install bash-completion@2."
-        "${brew_bin}"/brew install bash-completion@2
+        brew_install "bash-completion@2"
       else
         if [ "${sudoer}" ] ; then 
           util::print "${orange}[TODO]${noColour} Install bash-completion manually.\n"
@@ -352,6 +358,20 @@ install_config "vim"
 ## Install git-completion and git-prompt
 download_git_completion "git-completion.bash"
 download_git_completion "git-prompt.sh"
+
+## Install some useful software
+if [ "${os}" == "Darwin" ] ; then 
+  if util::confirm "${orange}[QUERY]${noColour} Install some useful software? " ; then 
+    brew_install "bash"                 # bash higher than v3
+    brew_install "shellcheck"           # for checking shell scripts
+    brew_install "rectangle"            # macOS window manager
+    brew_install "syntax-highlight"     # code syntax highlighting in quicklook
+    brew_install "qlmarkdown"           # markdown rendering in quicklook
+    brew_install "spotify"              # streaming music
+    brew_install "discord"              # discord chat
+    brew_install "iterm"                # better terminal program
+  fi
+fi
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
