@@ -268,17 +268,17 @@ function install_config () {
 
 function create_local_config_file () {
   configfile="${1}"
-  util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}.\n"
-  if [ -f "${HOME}/.${configfile}" ] ; then 
-    if ! util::config "${HOME}/.${configfile} exists. Continue to use it?" ; then 
-      util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile} as ${green}.${configfile}.bak-${ds}${noColour}\n"
-      mv "${HOME}/.${configfile}" "${HOME}/.${configfile}.bak-${ds}"
+  util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}_local.\n"
+  if [ -f "${HOME}/.${configfile}_local" ] ; then 
+    if ! util::config "${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
+      util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile}_local as ${green}.${configfile}_local.bak-${ds}${noColour}\n"
+      mv "${HOME}/.${configfile}_local" "${HOME}/.${configfile}_local.bak-${ds}"
     else 
-      util::print "${blue}[ACTION]${noColour} Retaining existing .${configfile}.\n"
+      util::print "${blue}[ACTION]${noColour} Retaining existing .${configfile}_local.\n"
     fi
   else 
-    util::print "${blue}[ACTION]${noColour} Creating empty .${configfile}.\n"
-    touch "${HOME}/.${configfile}"
+    util::print "${blue}[ACTION]${noColour} Creating empty .${configfile}_local.\n"
+    touch "${HOME}/.${configfile}_local"
   fi
   sleep 1
 }
@@ -342,8 +342,9 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 ## Create local config files if needed.
-create_local_config_file "bash_profile_local"
-create_local_config_file "gitconfig_local"
+create_local_config_file "bash_profile"
+create_local_config_file "gitconfig"
+create_local_config_file "bashrc"
 
 ## Install dot files proper.
 install_config "bash_profile"
