@@ -270,7 +270,7 @@ function create_local_config_file () {
   configfile="${1}"
   util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}_local.\n"
   if [ -f "${HOME}/.${configfile}_local" ] ; then 
-    if ! util::config "${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
+    if ! util::confirm "${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
       util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile}_local as ${green}.${configfile}_local.bak-${ds}${noColour}\n"
       mv "${HOME}/.${configfile}_local" "${HOME}/.${configfile}_local.bak-${ds}"
     else 
