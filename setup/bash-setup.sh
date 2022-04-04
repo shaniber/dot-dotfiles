@@ -305,8 +305,7 @@ function download_git_completion () {
     else 
       util::debug "The download of ${gcfile} completed successfully."
       util::print "${blue}[ACTION]${noColour} adding ${gcfile_path} to ${HOME}/.bash_profile_local.\n"
-      eval echo "source \"${HOME}/.git-completion.bash\" >> ${HOME}/.bash_profile_local"
-      eval echo "source \"${HOME}/.git-prompt.sh\" >> ${HOME}/.bash_profile_local"
+      eval echo "source \"${gcfile_path}\" >> ${HOME}/.bash_profile_local"
     fi
   fi
   sleep 1
