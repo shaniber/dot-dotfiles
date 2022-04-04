@@ -96,10 +96,10 @@ export GIT_PS1_SHOWDIRTYSTATE=yesPlease
 case "${TERM}" in 
 xterm*|rxvt*)
   TITLEBAR='\[\e]0;\u@\h:\w\a\]'
-  PS1="${TITLEBAR}${hostColour}${dashes} ${green}\u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}${bold}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
+  PS1="${TITLEBAR}${hostColour}${dashes} ${green}\u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(${bold}\j${noColour}${lgray} jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
   ;;
 linux|vt*)
-  PS1="${green}${dashes} \u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}${bold}(\j jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
+  PS1="${green}${dashes} \u${noColour}@${hostColour}\h${noColour}:${lblue}\w ${lgray}(${bold}\j${noColour}${lgray} jobs)${lred}"'$(__git_ps1)'"${noColour}\n\$ "
   ;;
 *)
   PS1='\u@\h:\w\$ '
