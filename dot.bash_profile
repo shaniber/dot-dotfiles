@@ -62,7 +62,6 @@ case $(hostname) in
 esac
 
 # User specific aliases and functions
-
 source "${HOME}/.dotfiles/functions/functions.gen"
 
 case "$os" in 

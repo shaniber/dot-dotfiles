@@ -305,8 +305,8 @@ function download_git_completion () {
     else 
       util::debug "The download of ${gcfile} completed successfully."
       util::print "${blue}[ACTION]${noColour} adding ${gcfile_path} to ${HOME}/.bash_profile_local.\n"
-      echo "source \"${HOME}/.git-completion.bash\" >> ${HOME}/.bash_profile_local"
-      echo "source \"${HOME}/.git-prompt.sh\" >> ${HOME}/.bash_profile_local"
+      eval echo "source \"${HOME}/.git-completion.bash\" >> ${HOME}/.bash_profile_local"
+      eval echo "source \"${HOME}/.git-prompt.sh\" >> ${HOME}/.bash_profile_local"
     fi
   fi
   sleep 1
@@ -333,7 +333,8 @@ if ! [ -d "${HOME}/bin" ] ; then
   util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
   if util::confirm "Create it? " ; then 
     true 
-    util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}."
+    util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
+    mkdir "${HOME}/bin"
   else 
     util::print "${orange}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}."
   fi 
