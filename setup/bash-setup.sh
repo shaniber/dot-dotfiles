@@ -175,9 +175,9 @@ function util::confirm_requirements() {
     ## Install homebrew if necessary.
     util::debug "Testing for Homebrew."
     if ! "${brew_bin}"/brew --version > /dev/null ; then
-      util::print "${blue}[ACTION]${noColour} Homebrew isn't installed.\n"
+      util::warn "Homebrew isn't installed.\n"
       if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
-        util::print "${blue}[ACTION]${green} Installing Homebrew${noColour}...\n"
+        util::print "${blue}[ACTION] Installing Homebrew${noColour}...\n"
         mkdir "${brew_repo}"
         /usr/bin/git clone git@github.com:Homebrew/brew.git "${brew_repo}"
         eval "$("${brew_bin}"/brew shellenv)"
@@ -192,9 +192,9 @@ function util::confirm_requirements() {
     ## Install coreutils
     util::debug "Testing for coreutils"
     if ! "${brew_bin}"/brew list | /usr/bin/grep "coreutils" &>/dev/null ; then 
-      util::print "${blue}[ACTION]${noColour}Coreutils isn't installed.\n"
-      if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
-        util::print "${blue}[ACTION]${green} Installing coreutils via brew${noColour}..."
+      util::warn "Coreutils isn't installed."
+      if util::confirm "${yellow}Proceed with installation?${noColour} " ; then 
+        util::print "${blue}[ACTION] Installing coreutils via brew${noColour}..."
         if ! brew_install coreutils ; then 
           util::error "Homebrew coreutils installation failed. Bailing out!"
           exit 74
@@ -270,7 +270,7 @@ function create_local_config_file () {
   configfile="${1}"
   util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}_local.\n"
   if [ -f "${HOME}/.${configfile}_local" ] ; then 
-    if ! util::confirm "${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
+    if ! util::confirm "${orange}[QUERY]${noColour} ${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
       util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile}_local as ${green}.${configfile}_local.bak-${ds}${noColour}\n"
       mv "${HOME}/.${configfile}_local" "${HOME}/.${configfile}_local.bak-${ds}"
     else 
@@ -286,19 +286,27 @@ function create_local_config_file () {
 function download_git_completion () {
   gcfile="${1}"
   util::print "${blue}[ACTION]${noColour} Checking for existing ${gcfile}.\n"
-  if [ -f "${HOME}/.${gcfile}" ] ; then 
-    if ! util::config "${HOME}/.${gcfile} exists. Continue to use it?" ; then 
+  if [ -d "${HOME}/bin" ] ; then 
+    gcfile_path="${HOME}/bin/${gcfile}"
+  else 
+    gcfile_path="${HOME}/.${gcfile}"
+  fi
+  if [ -f "${gcfile_path}" ] ; then 
+    if ! util::confirm "${orange}[QUERY]${noColour} ${gcfile_path} exists. Continue to use it?" ; then 
       util::print "${blue}[ACTION]${noColour} Preserving existing .${gcfile} as ${green}.${gcfile}.bak-${ds}${noColour}\n"
-      mv "${HOME}/.${gcfile}" "${HOME}/.${gcfile}.bak-${ds}"
+      mv "${gcfile_path}" "${gcfile_path}.bak-${ds}"
     else 
-      util::print "${blue}[ACTION]${noColour} Retaining existing .${gcfile}.\n"
+      util::print "${blue}[ACTION]${noColour} Retaining existing ${gcfile_path}.\n"
     fi
   else
-    util::print "${blue}[ACTION]${noColour} Installing ${gcfile}\n"
-    if ! curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/${gcfile}" -o "${HOME}/.${gcfile}" ; then 
+    util::print "${blue}[ACTION]${noColour} Installing ${gcfile_path}\n"
+    if ! curl -s "https://raw.githubusercontent.com/git/git/master/contrib/completion/${gcfile}" -o "${gcfile_path}" ; then 
       util::warn "${gcfile} did not download correctly. Please manually confirm this file was installed."
     else 
       util::debug "The download of ${gcfile} completed successfully."
+      util::print "${blue}[ACTION]${noColour} adding ${gcfile_path} to ${HOME}/.bash_profile_local.\n"
+      echo "source \"${HOME}/.git-completion.bash\" >> ${HOME}/.bash_profile_local"
+      echo "source \"${HOME}/.git-prompt.sh\" >> ${HOME}/.bash_profile_local"
     fi
   fi
   sleep 1
@@ -318,6 +326,18 @@ util::print "Setting up the ${red}D${orange}O${yellow}T${green}F${cyan}I${blue}L
 util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
+
+## Create $HOME/bin directory.
+util::debug "Checking for ${HOME}/bin directory."
+if ! [ -d "${HOME}/bin" ] ; then 
+  util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
+  if util::confirm "Create it? " ; then 
+    true 
+    util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}."
+  else 
+    util::print "${orange}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}."
+  fi 
+fi
 
 ## Install bash completion
 if [ "$(uname)" = "Darwin" ]; then
