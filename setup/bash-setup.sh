@@ -39,6 +39,9 @@ fi
 
 # Software to install
 bash_completion_version="2.11"
+brew_installed=0
+bash_installed=0
+bash_completion_installed=0
 
 # Current datestamp
 ds=$(date +%Y%m%d%H%M%S)
@@ -139,9 +142,9 @@ function util::confirm_requirements() {
   util::print "         You may be prompted for your password in the next step.\n\n"
   util::print "         ${green}Elevating privileges now...${noColour}\n\n"
   if sudo -v > /dev/null ; then 
-    sudoer="YES"
+    sudoer=1
   else 
-    sudoer="NO"
+    sudoer=0
   fi
   util::debug "sudo access? ${sudoer}"
 
@@ -182,7 +185,8 @@ function util::confirm_requirements() {
         /usr/bin/git clone git@github.com:Homebrew/brew.git "${brew_repo}"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew update --force --quiet
-        /bin/chmod -R go-w "${brew_bin}/share/zsh"
+        /bin/chmod -R go-w "${brew_prefix}/share/zsh"
+        homebrew_installed=1
       else
         util::error "Cannot proceed without Homebrew. Bailing out!"
         exit 99
@@ -191,11 +195,11 @@ function util::confirm_requirements() {
     
     ## Install coreutils
     util::debug "Testing for coreutils"
-    if ! "${brew_bin}"/brew list | /usr/bin/grep "coreutils" &>/dev/null ; then 
+    if ! "${brew_bin}"/brew info coreutils | /usr/bin/grep "Poured" &>/dev/null ; then 
       util::warn "Coreutils isn't installed."
       if util::confirm "${yellow}Proceed with installation?${noColour} " ; then 
         util::print "${blue}[ACTION] Installing coreutils via brew${noColour}..."
-        if ! brew_install coreutils ; then 
+        if ! brew_install "coreutils" ; then 
           util::error "Homebrew coreutils installation failed. Bailing out!"
           exit 74
         fi
@@ -305,7 +309,7 @@ function download_git_completion () {
     else 
       util::debug "The download of ${gcfile} completed successfully."
       util::print "${blue}[ACTION]${noColour} adding ${gcfile_path} to ${HOME}/.bash_profile_local.\n"
-      eval echo "source \"${gcfile_path}\" >> ${HOME}/.bash_profile_local"
+      printf "source %s\n" "${gcfile_path}" >> "${HOME}/.bash_profile_local\n\n"
     fi
   fi
   sleep 1
@@ -339,25 +343,91 @@ if ! [ -d "${HOME}/bin" ] ; then
   fi 
 fi
 
-## Install bash completion
-if [ "$(uname)" = "Darwin" ]; then
-  util::debug "Checking for bash-completion@2 installation"
-  if ! [ -f "${brew_prefix}"/etc/profile.d/bash_completion.sh ] ; then
-    util::print "${orange}[INFO]${noColour} bash-completion v2 is not required, but is recommended."
-    if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
-      if [ -f "${brew_bin}"/brew ]; then
-        util::print "Using 'brew' to install bash-completion@2."
-        brew_install "bash-completion@2"
-      else
+## Install recommended but optional software
+if [ "${os}" = "macos" ] ; then 
+  ## Install bash 4+
+  util::debug "Checking for bash installation."
+  if ! ${brew_bin} info bash | /usr/bin/grep Poured &>/dev/null ; then 
+    util::print "${orange}[INFO]${noColour} Bash >4 is not required, but is recommended."
+    if util::confirm "${yellow}Would you like to install it?${noColour} " ; then
+      if [ ${brew_installed} ] ; then 
+        util::print "${blue}[ACTION]${noColour} using 'brew' to install bash.\n"
+        if ! brew_install "bash" ; then 
+          util::error "bash failed to install, for some reason. Continuing..."
+        else
+          bash_installed="$(${brew_bin}/bash --version | sed -Ee 's/GNU bash, version ([0-9.]+).*/\1/;q')"
+        fi
+      else 
         if [ "${sudoer}" ] ; then 
-          util::print "${orange}[TODO]${noColour} Install bash-completion manually.\n"
-        else 
-          util::warn "Cannot install bash-completion@2. Please install manually."
+          util::print "${orange}[TODO]${noColour} Install base manually.\n"
+        else
+          util::warn "Cannot install bash. Please install manually."
         fi
       fi
-    else
-      util::print "${orange}[INFO]${noColour} Skipping installation of bash-completion.\n"
+    else 
+      util::print "${orange}[INFO]${noColour} Skipping installation of bash.\n"
     fi
+  fi
+
+  ## Install bash completion
+  util::debug "Checking for bash-completion installation."
+  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 3 ] ; then
+    # Bash 4+ installed, so install bash_completion@2
+    if ! [ -f "${brew_prefix}"/etc/profile.d/bash_completion.sh ] ; then
+      util::print "${orange}[INFO]${noColour} bash-completion v2 is not required, but is recommended."
+      if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
+        if [ ${brew_installed} ]; then
+          util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion@2."
+          brew_install "bash-completion@2"
+          bash_completion_installed=1
+        else
+          if [ "${sudoer}" ] ; then 
+            util::print "${orange}[TODO]${noColour} Install bash-completion@2 manually.\n"
+          else 
+            util::warn "Cannot install bash-completion@2. Please install manually."
+          fi
+        fi
+      else
+        util::print "${orange}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
+      fi
+    else
+      bash_completion_installed=1
+    fi
+  else
+    # System Bash 3 is installed, so just install bash_completion
+    if ! [ -f "${brew_prefix}"/etc/bash_completion ] ; then
+      util::print "${orange}[INFO]${noColour} bash-completion is not required, but is recommended."
+      if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
+        if [ ${brew_installed} ]; then
+          util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion."
+          brew_install "bash-completion"
+          bash_completion_installed=1
+        else
+          if [ "${sudoer}" ] ; then 
+            util::print "${orange}[TODO]${noColour} Install bash-completion manually.\n"
+          else 
+            util::warn "Cannot install bash-completion. Please install manually."
+          fi
+        fi
+      else
+        util::print "${orange}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
+      fi
+    else
+      bash_completion_installed=1
+    fi
+  fi
+  
+  if [ "${bash_completion_installed}" ] ; then 
+    util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
+    {
+      printf "# Bash completion (which should have been installed during setup)\n"
+      printf "if command -v brew &> /dev/null && [ -r \"\$(brew --prefix)/etc/profile.d/bash_completion.sh\" ] ; then\n"
+      printf "  export BASH_COMPLETION_COMPAT_DIR=\"\$(brew --prefix)/etc/bash_completion.d\";\n"
+      printf "  source \"\$(brew --prefix)/etc/profile.d/bash_completion.sh\";\n"
+      printf "elif [ -f /etc/bash_completion ]; then\n"
+      printf "  source /etc/bash_completion;\n"
+      printf "fi;\n"
+    } >> "${HOME}/.bash_profile_local"
   fi
 fi
 
@@ -380,10 +450,9 @@ install_config "vim"
 download_git_completion "git-completion.bash"
 download_git_completion "git-prompt.sh"
 
-## Install some useful software
+## Offer to install some useful software
 if [ "${os}" == "macos" ] ; then 
   if util::confirm "${orange}[QUERY]${noColour} Install some useful software? " ; then 
-    brew_install "bash"                 # bash higher than v3
     brew_install "shellcheck"           # for checking shell scripts
     brew_install "rectangle"            # macOS window manager
     brew_install "syntax-highlight"     # code syntax highlighting in quicklook
@@ -392,6 +461,7 @@ if [ "${os}" == "macos" ] ; then
     brew_install "discord"              # discord chat
     brew_install "iterm"                # better terminal program
     brew_install "pandoc"               # markup format conversion
+    brew_install "vscodium"             # rebuild of Visual Studio Code w/o telemetry
   fi
 fi
 

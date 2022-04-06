@@ -4,7 +4,7 @@
 
 ## Import configuration for non-interactive shells.
 if [ -f "${HOME}/.bashrc" ] ; then
-    . "${HOME}/.bashrc"
+    source "${HOME}/.bashrc"
 fi
 
 ## Interactive shells configuration.
@@ -66,13 +66,20 @@ source "${HOME}/.dotfiles/functions/functions.gen"
 
 case "$os" in 
 linux)
-  . "${HOME}/.dotfiles/functions/functions.linux"
+  source "${HOME}/.dotfiles/functions/functions.linux"
+
   ;;
 macos)
+  # Hide the “default interactive shell is now zsh” warning on macOS.
+  export BASH_SILENCE_DEPRECATION_WARNING=1;
+
+  # More convenient ls colours. 
+  export LSCOLORS=gxfxcxdxbxegedabagaced
+
   alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
   alias flushdns='sudo killall -HUP mDNSResponder; sleep 2; echo macOS DNS Cache is reset.'
   alias ls="ls -G"
-  . "${HOME}/.dotfiles/functions/functions.macos"
+  source "${HOME}/.dotfiles/functions/functions.macos"
   ;;
 esac
 
@@ -115,11 +122,11 @@ GREP_COLORS='fn=1;32'
 export PATH VISUAL EDITOR GREP_COLORS PS1 PROMPT_COMMAND
 
 # Check the version of the dot.files and see if it's the latest.
-#. "${HOME}/.dotfiles/setup/check_version.sh"
+#source "${HOME}/.dotfiles/setup/check_version.sh"
 
 # Include local configurations.
 if [ -f "${HOME}/.bash_profile_local" ] ; then
-    . "${HOME}/.bash_profile_local"
+    source "${HOME}/.bash_profile_local"
 fi
 
 echo;uptime; echo
