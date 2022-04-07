@@ -7,6 +7,9 @@ if [ -f /etc/bash.bashrc ]; then
 	. /etc/bash.bashrc
 fi
 
+# Set the path 
+PATH="$PATH:/sbin:/usr/sbin:${HOME}/bin"
+
 # SSH agent set up.
 SSH_ENV="${HOME}/.ssh/environment"
 
@@ -29,7 +32,7 @@ SSH_ENV="${HOME}/.ssh/environment"
 #	start_agent
 #fi
 
-export SSH_ENV
+export PATH SSH_ENV
 
 # Include any local configurations.
 if [ -f ~/.bashrc_local ]

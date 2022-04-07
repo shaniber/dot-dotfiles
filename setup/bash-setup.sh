@@ -38,7 +38,6 @@ else
 fi
 
 # Software to install
-bash_completion_version="2.11"
 brew_installed=0
 bash_installed=0
 bash_completion_installed=0
@@ -186,7 +185,7 @@ function util::confirm_requirements() {
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew update --force --quiet
         /bin/chmod -R go-w "${brew_prefix}/share/zsh"
-        homebrew_installed=1
+        brew_installed=1
       else
         util::error "Cannot proceed without Homebrew. Bailing out!"
         exit 99
@@ -254,7 +253,7 @@ function brew_install() {
   "${brew_bin}"/brew install "${1}"
 }
 
-function install_config () {
+function link_config_file () {
   dotfile="${1}"
   util::print "${blue}[ACTION]${noColour} Installing .${dotfile}.\n"
   if [ -f "${HOME}/.${dotfile}" ] && [ ! -L "${HOME}/.${dotfile}" ]; then
@@ -320,9 +319,6 @@ util::debug "        Architecture: ${architecture}"
 util::debug "        brew_prefix:  ${brew_prefix}"
 util::debug "        brew_repo:    ${brew_repo}"
 util::debug "        brew_bin:     ${brew_bin}"
-
-util::debug "Software Versions to install:"
-util::debug "        bash completion: ${bash_completion_version}"
 
 util::print "Setting up the ${red}D${orange}O${yellow}T${green}F${cyan}I${blue}L${magenta}E${white}S${noColour}!\n"
 
@@ -417,6 +413,7 @@ if [ "${os}" = "macos" ] ; then
     fi
   fi
   
+  ## Put bash_completion include in the bash_profile_local, since it's not required.
   if [ "${bash_completion_installed}" ] ; then 
     util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
     {
@@ -437,14 +434,14 @@ create_local_config_file "gitconfig"
 create_local_config_file "bashrc"
 
 ## Install dot files proper.
-install_config "bash_profile"
-install_config "bashrc"
-install_config "bash_logout"
-install_config "gitconfig"
-install_config "gitignore"
-install_config "inputrc"
-install_config "vimrc"
-install_config "vim"
+link_config_file "bash_profile"
+link_config_file "bashrc"
+link_config_file "bash_logout"
+link_config_file "gitconfig"
+link_config_file "gitignore"
+link_config_file "inputrc"
+link_config_file "vimrc"
+link_config_file "vim"
 
 ## Install git-completion and git-prompt
 download_git_completion "git-completion.bash"

@@ -114,7 +114,6 @@ esac
 PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then printf "${white}${lbluebg}${bold}RETURN${noColour}: ${lblue}${ret}${noColour}\n"; fi'
 
 # User specific environment and startup programs
-PATH="$PATH:/sbin:/usr/sbin:${HOME}/bin"
 VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 GREP_COLORS='fn=1;32'
