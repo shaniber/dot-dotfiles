@@ -199,15 +199,6 @@ function util::confirm_requirements() {
       fi
     fi
 
-    ## Put ${brew_path}/brew in the bash_profile_local. 
-    if [ "${brew_installed}" ] ; then 
-      util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
-      {
-        printf "# Add brew to path (which should have been installed during setup)\n"
-        printf "PATH=${brew_path}:\$PATH\n"
-      } >> "${HOME}/.bash_profile_local"
-    fi
-    
     ## Install coreutils
     util::debug "Testing for coreutils"
     if ! "${brew_bin}"/brew info coreutils | /usr/bin/grep "Poured" &>/dev/null ; then 
@@ -469,6 +460,15 @@ if [ "${os}" = "macos" ] ; then
       printf "elif [ -f /etc/bash_completion ]; then\n"
       printf "  source /etc/bash_completion;\n"
       printf "fi;\n"
+    } >> "${HOME}/.bash_profile_local"
+  fi
+
+  ## Put ${brew_path}/brew in the bash_profile_local. 
+  if [ "${brew_installed}" ] ; then 
+    util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
+    {
+      printf "# Add brew to path (which should have been installed during setup)\n"
+      printf "PATH=${brew_path}:\$PATH\n"
     } >> "${HOME}/.bash_profile_local"
   fi
 
