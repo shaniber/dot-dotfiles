@@ -450,6 +450,7 @@ if [ "${os}" = "macos" ] ; then
   fi
   
   ## Put bash_completion include in the bash_profile_local, since it's not required.
+  util::debug "Checking for bash completion installation, and adding it to .bash_profile_local."
   if [ "${bash_completion_installed}" ] ; then 
     util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
     {
@@ -463,13 +464,14 @@ if [ "${os}" = "macos" ] ; then
     } >> "${HOME}/.bash_profile_local"
   fi
 
-  ## Put ${brew_path}/brew in the bash_profile_local. 
+  ## Put ${brew_path} in the bashrc_local. 
+  util::debug "Checking for brew, and additing it to .bashrc_local."
   if [ "${brew_installed}" ] ; then 
     util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
     {
       printf "# Add brew to path (which should have been installed during setup)\n"
       printf "PATH=${brew_path}:\$PATH\n"
-    } >> "${HOME}/.bash_profile_local"
+    } >> "${HOME}/.bashrc_local"
   fi
 
 fi
