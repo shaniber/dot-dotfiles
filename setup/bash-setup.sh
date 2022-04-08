@@ -156,7 +156,7 @@ function util::confirm_requirements() {
     util::debug "Testing for command line tools."
     if ! /usr/bin/xcode-select -p &>/dev/null ; then 
       util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and the script requires them.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install? " ; then 
+      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${green}Installing command line tools${noColour}...\n"
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
         PROD=$(/usr/sbin/softwareupdate -l |
@@ -181,7 +181,7 @@ function util::confirm_requirements() {
     util::debug "Testing for Homebrew."
     if ! "${brew_bin}"/brew --version &>/dev/null ; then
       util::warn "Homebrew isn't installed."
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install? " ; then 
+      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${blue}[ACTION] Installing Homebrew${noColour}...\n"
         sudo mkdir "${brew_repo}"
         sudo chown -R "${current_user}" "${brew_repo}"
@@ -203,7 +203,7 @@ function util::confirm_requirements() {
     util::debug "Testing for coreutils"
     if ! "${brew_bin}"/brew info coreutils | /usr/bin/grep "Poured" &>/dev/null ; then 
       util::warn "Coreutils isn't installed."
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with installation? " ; then 
+      if util::confirm " ${orange}[QUERY]${noColour} Proceed with installation?" ; then 
         util::print "${blue}[ACTION] Installing coreutils via brew${noColour}...\n"
         if ! brew_install "coreutils" ; then 
           util::error "Homebrew coreutils installation failed. Bailing out!"
@@ -353,7 +353,7 @@ create_local_config_file "bashrc"
 util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
   util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
-  if util::confirm " ${orange}[QUERY]${noColour} Create it? " ; then 
+  if util::confirm " ${orange}[QUERY]${noColour} Create it?" ; then 
     true 
     util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
     mkdir "${HOME}/bin"
@@ -395,7 +395,7 @@ if [ "${os}" = "macos" ] ; then
     sudo sh -c "echo \"${brew_bin}/bash\" >> /etc/shells"
     if ! [ ${SHELL} = "${brew_bin}"/bash} ] ; then 
       util::print "  ${magenta}[INFO]${noColour} Changing your shell to ${brew_bin}/bash is not required, but is recommended.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Change your shell to ${brew_bin}/bash? " ; then 
+      if util::confirm " ${orange}[QUERY]${noColour} Change your shell to ${brew_bin}/bash?" ; then 
         chsh -s "${brew_bin}/bash"
       fi
     fi
@@ -480,7 +480,7 @@ download_git_completion "git-prompt.sh"
 
 ## Offer to install some useful software
 if [ "${os}" == "macos" ] ; then 
-  if util::confirm "${orange}[QUERY]${noColour} Install some useful software? " ; then 
+  if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; then 
     brew_install "shellcheck"           # for checking shell scripts
     brew_install "rectangle"            # macOS window manager
     brew_install "syntax-highlight"     # code syntax highlighting in quicklook
