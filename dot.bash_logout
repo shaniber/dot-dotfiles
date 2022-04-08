@@ -6,3 +6,4 @@
 if [ "${SHLVL}" = 1 ] && [ "${os}" == "linux" ]; then
     [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
+

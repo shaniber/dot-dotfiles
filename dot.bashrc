@@ -32,10 +32,11 @@ SSH_ENV="${HOME}/.ssh/environment"
 #	start_agent
 #fi
 
-export PATH SSH_ENV
-
 # Include any local configurations.
 if [ -f ~/.bashrc_local ]
 then 
     . ~/.bashrc_local
 fi
+
+export PATH SSH_ENV
+

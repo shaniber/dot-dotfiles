@@ -118,7 +118,6 @@ VISUAL="/usr/bin/vim"
 EDITOR="/usr/bin/vi -e"
 GREP_COLORS='fn=1;32'
 
-export PATH VISUAL EDITOR GREP_COLORS PS1 PROMPT_COMMAND
 
 # Check the version of the dot.files and see if it's the latest.
 #source "${HOME}/.dotfiles/setup/check_version.sh"
@@ -128,4 +127,7 @@ if [ -f "${HOME}/.bash_profile_local" ] ; then
     source "${HOME}/.bash_profile_local"
 fi
 
+export PATH VISUAL EDITOR GREP_COLORS PS1 PROMPT_COMMAND
+
 echo;uptime; echo
+
