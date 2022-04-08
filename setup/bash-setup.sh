@@ -188,8 +188,9 @@ function util::confirm_requirements() {
         /usr/bin/git clone https://github.com/Homebrew/brew.git "${brew_repo}"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew analytics off 
-        "${brew_bin}"/brew tap homebrew/cask
         "${brew_bin}"/brew update --force --quiet
+        "${brew_bin}"/brew tap homebrew/cask
+        "${brew_bin}"/brew tap homebrew/cask-versions
         /bin/chmod -R go-w "${brew_prefix}/share/zsh"
         brew_installed=1
       else
