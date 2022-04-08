@@ -327,7 +327,16 @@ util::debug "        brew_repo:    ${brew_repo}"
 util::debug "        brew_bin:     ${brew_bin}"
 util::debug "        current_user: ${current_user}"
 
-util::print "Setting up the ${red}D${orange}O${yellow}T${green}F${cyan}I${blue}L${magenta}E${white}S${noColour}!\n"
+util::print "Setting up your fancy-schmancy new \n\n"
+util::print "       ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S${noColour}\n"
+util::print "       ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S${noColour} - ${red}D${noColour}\n"
+util::print "       ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour}\n"
+util::print "       ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour}\n"
+util::print "       ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour}\n"
+util::print "       ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour}\n"
+util::print "       ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour}\n"
+util::print "       ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour}\n\n"
+util::print "(Yes, I was bored. Be thankful I'm not proficient with ${bold}${reverse}tput${noColour} yet).\n"
 
 util::confirm_requirements
 
