@@ -340,7 +340,6 @@ util::print "       ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${n
 
 util::print "(Yes, I was bored. Be thankful I'm not proficient with ${bold}${reverse}tput${noColour} yet).\n"
 
-exit 99
 util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
