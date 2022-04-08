@@ -393,6 +393,12 @@ if [ "${os}" = "macos" ] ; then
   if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] && ! /usr/bin/grep "${brew_bin}" /etc/shells ; then
     util::print "${blue}[ACTION]${noColour} Adding ${brew_bin}/bash to /etc/shells.\n"
     sudo sh -c "echo \"${brew_bin}/bash\" >> /etc/shells"
+    if ! [ ${SHELL} = "${brew_bin}"/bash} ] ; then 
+      util::print "  ${magenta}[INFO]${noColour} Changing your shell to ${brew_bin}/bash is not required, but is recommended.\n"
+      if util::confirm " ${orange}[QUERY]${noColour} Change your shell to ${brew_bin}/bash? " ; then 
+        chsh -s "${brew_bin}/bash"
+      fi
+    fi
   fi
 
   ## Install bash completion
