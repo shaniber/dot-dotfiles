@@ -51,7 +51,7 @@ ds=$(date +%Y%m%d%H%M%S)
 ## Debugging.
 function util::debug() {
   if [ "$DEBUG" == 1 ] ; then
-    printf ' %s[DEBUG]%b %b \n' "${blue}" "${noColour}" "${1}"
+    printf ' %s[DEBUG]%b %b \n' "${cyan}${reverse}" "${noColour}" "${1}"
   fi
 }
 
@@ -390,9 +390,9 @@ if [ "${os}" = "macos" ] ; then
 
   # If bash installed successfully, add it to /etc/shells.
   util::debug "Checking if bash should be added to /etc/shells"
-  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] ; then
+  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] $$ ! /usr/bin/grep "${brew_bin}" /etc/shells ; then
     util::print "${blue}[ACTION]${noColour} Adding ${brew_bin}/bash to /etc/shells.\n"
-    printf "${brew_bin}/bash" >> /etc/shells
+    sudo sh -c "echo \"${brew_bin}/bash\" >> /etc/shells"
   fi
 
   ## Install bash completion
