@@ -464,13 +464,13 @@ if [ "${os}" = "macos" ] ; then
     } >> "${HOME}/.bash_profile_local"
   fi
 
-  ## Put ${brew_path} in the bashrc_local. 
+  ## Put ${brew_bin} in the bashrc_local. 
   util::debug "Checking for brew, and additing it to .bashrc_local."
   if [ "${brew_installed}" ] ; then 
     util::print "${blue}[ACTION]${noColour} adding brew path to ${HOME}/.bashrc_local.\n"
     {
       printf "# Add brew to path (which should have been installed during setup)\n"
-      printf "PATH=${brew_path}:\$PATH\n"
+      printf "PATH=${brew_bin}:\$PATH\n"
     } >> "${HOME}/.bashrc_local"
   fi
 
