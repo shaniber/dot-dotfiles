@@ -23,6 +23,9 @@ DEBUG=${DEBUG-0}
 ## Useful globals
 dotfiles_prefix="${HOME}/.dotfiles"
 
+## Determine the user running this script.
+current_user=$(stat -f %Su /dev/console)
+
 ## Determine our architecture.
 architecture=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
 
@@ -151,8 +154,8 @@ function util::confirm_requirements() {
   if [ "${os}" == "macos" ] ; then 
     ## Install the macOS command line tools if necessary
     util::debug "Testing for command line tools."
-    if ! /usr/bin/xcode-select -p > /dev/null ; then 
-      util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and the script requires them."
+    if ! /usr/bin/xcode-select -p &>/dev/null ; then 
+      util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and the script requires them.\n"
       if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
         # TODO: install xcode command line tools
         util::print "${green}Installing command line tools${noColour}..."
@@ -164,7 +167,8 @@ function util::confirm_requirements() {
           /usr/bin/awk -F": " '{print $2}' |
           /usr/bin/tr -d '\n')
         util::debug "Installing ${yellow}${PROD}${noColour}."
-        softwareupdate -i "$PROD" -v;
+        softwareupdate -i "$PROD" --verbose;
+        rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
       else 
         # Can't proceed without command line tools, exit.
         util::error "Cannot proceed without command line tools. Bailing out!"
@@ -176,13 +180,15 @@ function util::confirm_requirements() {
 
     ## Install homebrew if necessary.
     util::debug "Testing for Homebrew."
-    if ! "${brew_bin}"/brew --version > /dev/null ; then
-      util::warn "Homebrew isn't installed.\n"
+    if ! "${brew_bin}"/brew --version &>/dev/null ; then
+      util::warn "Homebrew isn't installed.n"
       if util::confirm "${yellow}Proceed with install?${noColour} " ; then 
         util::print "${blue}[ACTION] Installing Homebrew${noColour}...\n"
-        mkdir "${brew_repo}"
-        /usr/bin/git clone git@github.com:Homebrew/brew.git "${brew_repo}"
+        sudo mkdir "${brew_repo}"
+        sudo chown -R "${current_user}" "${brew_repo}"
+        /usr/bin/git clone https://github.com/Homebrew/brew.git "${brew_repo}"
         eval "$("${brew_bin}"/brew shellenv)"
+        "${brew_bin}"/brew analytics off 
         "${brew_bin}"/brew update --force --quiet
         /bin/chmod -R go-w "${brew_prefix}/share/zsh"
         brew_installed=1
@@ -319,12 +325,18 @@ util::debug "        Architecture: ${architecture}"
 util::debug "        brew_prefix:  ${brew_prefix}"
 util::debug "        brew_repo:    ${brew_repo}"
 util::debug "        brew_bin:     ${brew_bin}"
+util::debug "        current_user: ${current_user}"
 
 util::print "Setting up the ${red}D${orange}O${yellow}T${green}F${cyan}I${blue}L${magenta}E${white}S${noColour}!\n"
 
 util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
+
+## Create local config files if needed.
+create_local_config_file "bash_profile"
+create_local_config_file "gitconfig"
+create_local_config_file "bashrc"
 
 ## Create $HOME/bin directory.
 util::debug "Checking for ${HOME}/bin directory."
@@ -343,8 +355,8 @@ fi
 if [ "${os}" = "macos" ] ; then 
   ## Install bash 4+
   util::debug "Checking for bash installation."
-  if ! ${brew_bin} info bash | /usr/bin/grep Poured &>/dev/null ; then 
-    util::print "${orange}[INFO]${noColour} Bash >4 is not required, but is recommended."
+  if ! ${brew_bin}/brew info bash | /usr/bin/grep Poured &>/dev/null ; then 
+    util::print "${orange}[INFO]${noColour} Bash >4 is not required, but is recommended.\n"
     if util::confirm "${yellow}Would you like to install it?${noColour} " ; then
       if [ ${brew_installed} ] ; then 
         util::print "${blue}[ACTION]${noColour} using 'brew' to install bash.\n"
@@ -366,11 +378,11 @@ if [ "${os}" = "macos" ] ; then
   fi
 
   ## Install bash completion
-  util::debug "Checking for bash-completion installation."
+  util::debug "Checking for bash-completion installation, for bash v${bash_installed}."
   if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 3 ] ; then
     # Bash 4+ installed, so install bash_completion@2
     if ! [ -f "${brew_prefix}"/etc/profile.d/bash_completion.sh ] ; then
-      util::print "${orange}[INFO]${noColour} bash-completion v2 is not required, but is recommended."
+      util::print "${orange}[INFO]${noColour} bash-completion v2 is not required, but is recommended.\n"
       if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
         if [ ${brew_installed} ]; then
           util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion@2."
@@ -392,7 +404,7 @@ if [ "${os}" = "macos" ] ; then
   else
     # System Bash 3 is installed, so just install bash_completion
     if ! [ -f "${brew_prefix}"/etc/bash_completion ] ; then
-      util::print "${orange}[INFO]${noColour} bash-completion is not required, but is recommended."
+      util::print "${orange}[INFO]${noColour} bash-completion is not required, but is recommended.\n"
       if util::confirm "${yellow}Would you like to install it?${noColour} " ; then 
         if [ ${brew_installed} ]; then
           util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion."
@@ -427,11 +439,6 @@ if [ "${os}" = "macos" ] ; then
     } >> "${HOME}/.bash_profile_local"
   fi
 fi
-
-## Create local config files if needed.
-create_local_config_file "bash_profile"
-create_local_config_file "gitconfig"
-create_local_config_file "bashrc"
 
 ## Install dot files proper.
 link_config_file "bash_profile"
