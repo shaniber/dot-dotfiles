@@ -198,6 +198,15 @@ function util::confirm_requirements() {
         exit 99
       fi
     fi
+
+    ## Put ${brew_path}/brew in the bash_profile_local. 
+    if [ "${brew_installed}" ] ; then 
+      util::print "${blue}[ACTION]${noColour} adding bash_completion to ${HOME}/.bash_profile_local.\n"
+      {
+        printf "# Add brew to path (which should have been installed during setup)\n"
+        printf "PATH=${brew_path}:\$PATH\n"
+      } >> "${HOME}/.bash_profile_local"
+    fi
     
     ## Install coreutils
     util::debug "Testing for coreutils"
@@ -390,7 +399,7 @@ if [ "${os}" = "macos" ] ; then
 
   # If bash installed successfully, add it to /etc/shells.
   util::debug "Checking if bash should be added to /etc/shells"
-  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] && ! /usr/bin/grep "${brew_bin}" /etc/shells ; then
+  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] && ! /usr/bin/grep "${brew_bin}" /etc/shells &>/dev/null ; then
     util::print "${blue}[ACTION]${noColour} Adding ${brew_bin}/bash to /etc/shells.\n"
     sudo sh -c "echo \"${brew_bin}/bash\" >> /etc/shells"
     if ! [ ${SHELL} = "${brew_bin}"/bash} ] ; then 
@@ -462,6 +471,7 @@ if [ "${os}" = "macos" ] ; then
       printf "fi;\n"
     } >> "${HOME}/.bash_profile_local"
   fi
+
 fi
 
 ## Install dot files proper.
