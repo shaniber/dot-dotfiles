@@ -314,7 +314,7 @@ function download_git_completion () {
     else 
       util::debug "The download of ${gcfile} completed successfully."
       util::print "${blue}[ACTION]${noColour} adding ${gcfile_path} to ${HOME}/.bash_profile_local.\n"
-      printf "source %s\n" "${gcfile_path}" >> "${HOME}/.bash_profile_local\n\n"
+      printf "source %s\n" "${gcfile_path}" >> "${HOME}/.bash_profile_local"
     fi
   fi
   sleep 1
@@ -375,6 +375,13 @@ if [ "${os}" = "macos" ] ; then
     else 
       util::print "${orange}[INFO]${noColour} Skipping installation of bash.\n"
     fi
+  fi
+
+  # If bash installed successfully, add it to /etc/shells
+  util::debug "Checking if bash should be added to /etc/shells"
+  if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 0 ] ; then
+    util::print "${blue}[ACTION]${noColour} Adding ${brew_bin}/bash to /etc/shells.\n"
+    printf "${brew_bin}/bash" >> /etc/shells
   fi
 
   ## Install bash completion
