@@ -321,6 +321,14 @@ function download_git_completion () {
   sleep 1
 }
 
+function install_vscode_extension () {
+  ext="${1}"
+  util::print "${blue}[ACTION]${noColour} Installing ${ext} for VSCode.\n"
+  if ! code --install-extension ${ext} --force ; then
+    util::warning "${ext} did not install properly."
+  fi
+}
+
 util::debug "Script Environment: "
 util::debug "        Architecture: ${architecture}"
 util::debug "        brew_prefix:  ${brew_prefix}"
@@ -504,6 +512,20 @@ if [ "${os}" == "macos" ] ; then
     brew_install "vscodium"             # rebuild of Visual Studio Code w/o telemetry
   fi
 fi
+
+## If VSCode is installed, then install some extensions as well. 
+util::debug "Offering to install Visual Studio Code extensions if code is installed."
+if ! command -v code &>/dev/null ; then
+  if util::confirm "${orange}[QUERY]${noColour} Install Visual Studio Code extentions?" ; then 
+    install_code_extension mechatroner.rainbow-csv
+    install_code_extension oderwat.indent-rainbow
+    install_code_extension richterger.perl
+    install_code_extension timonwong.shellcheck
+    install_code_extension yzhang.markdown-all-in-one
+  fi
+fi
+
+
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
