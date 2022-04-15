@@ -324,7 +324,7 @@ function download_git_completion () {
 function install_vscode_extension () {
   ext="${1}"
   util::print "${blue}[ACTION]${noColour} Installing ${ext} for VSCode.\n"
-  if ! code --install-extension ${ext} --force ; then
+  if ! code --install-extension ${ext} --force &>/dev/null ; then
     util::warning "${ext} did not install properly."
   fi
 }
@@ -516,8 +516,8 @@ fi
 ## If VSCode is installed, then install the CLI tool and some extensions as well. 
 util::debug "Offering to install Visual Studio Code extensions if code is installed."
 if ! command -v code &>/dev/null && [ -d "/Applications/Visual Studio Code.app" ] ; then 
-  if util::confirm "%{orange}[QUERY]${noColour} Visual Studio Code is installed... activate the CLI tool?" ; then 
-    ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
+  if util::confirm "${orange}[QUERY]${noColour} Visual Studio Code is installed... activate the CLI tool?" ; then 
+    sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
   fi
 fi
 
