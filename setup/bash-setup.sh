@@ -268,7 +268,7 @@ function link_config_file () {
     mv "${HOME}/.${dotfile}" "${HOME}/.${dotfile}.bak-${ds}"
   else 
     if ${readlink} "${HOME}/.${dotfile}" | /usr/bin/grep -q "${dotfiles_prefix}/dot.${dotfile}" ; then
-      util::warn ".${dotfile} exists and point to the expected installation directory. Skipping..."
+      util::warn ".${dotfile} exists and is symlinked to the expected installation directory. Skipping..."
     else 
       ln -s "${dotfiles_prefix}/dot.${dotfile}" "${HOME}/.${dotfile}"
     fi
@@ -507,25 +507,30 @@ if [ "${os}" == "macos" ] ; then
     brew_install "qlmarkdown"           # markdown rendering in quicklook
     brew_install "spotify"              # streaming music
     brew_install "discord"              # discord chat
-    brew_install "iterm"                # better terminal program
+    brew_install "iterm2"               # better terminal program
     brew_install "pandoc"               # markup format conversion
-    brew_install "vscodium"             # rebuild of Visual Studio Code w/o telemetry
+    brew_install "vscode"               # Visual Studio Code
   fi
 fi
 
-## If VSCode is installed, then install some extensions as well. 
+## If VSCode is installed, then install the CLI tool and some extensions as well. 
 util::debug "Offering to install Visual Studio Code extensions if code is installed."
-if ! command -v code &>/dev/null ; then
-  if util::confirm "${orange}[QUERY]${noColour} Install Visual Studio Code extentions?" ; then 
-    install_code_extension mechatroner.rainbow-csv
-    install_code_extension oderwat.indent-rainbow
-    install_code_extension richterger.perl
-    install_code_extension timonwong.shellcheck
-    install_code_extension yzhang.markdown-all-in-one
+if ! command -v code &>/dev/null && [ -d "/Applications/Visual Studio Code.app" ] ; then 
+  if util::confirm "%{orange}[QUERY]${noColour} Visual Studio Code is installed... activate the CLI tool?" ; then 
+    ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
   fi
 fi
 
-
+if command -v code &>/dev/null ; then
+  if util::confirm "${orange}[QUERY]${noColour} Install Visual Studio Code extentions?" ; then 
+    install_vscode_extension mechatroner.rainbow-csv
+    install_vscode_extension oderwat.indent-rainbow
+    install_vscode_extension richterger.perl
+    install_vscode_extension timonwong.shellcheck
+    install_vscode_extension yzhang.markdown-all-in-one
+  fi
+fi
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
+
