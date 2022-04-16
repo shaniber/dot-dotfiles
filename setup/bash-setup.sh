@@ -510,7 +510,7 @@ if [ "${os}" == "macos" ] ; then
     brew_install "discord"              # discord chat
     brew_install "iterm2"               # better terminal program
     brew_install "pandoc"               # markup format conversion
-    brew_install "vscode"               # Visual Studio Code
+    brew_install "visual-studio-code"   # Visual Studio Code
   fi
 fi
 
