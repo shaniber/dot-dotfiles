@@ -139,8 +139,9 @@ function util::confirm_requirements() {
   ## Test for sudo access.
   util::debug "Testing for sudo access."
   util::print "${blue}[ACTION] ${yellow}Elevated privileges are recommended.${noColour}\n"
-  util::print "         If you do not have sudo access, there may be some actions that you cannot perform.\n"
-  util::print "         These are not required for setup completion, just useful.\n"
+  util::print "         If you do not have sudo access, there may be some actions that\n"
+  util::print "         you cannot perform. These are not required for setup completion,\n"
+  util::print "         just useful.\n\n"
   util::print "         You may be prompted for your password in the next step.\n\n"
   util::print "         ${green}Elevating privileges now...${noColour}\n\n"
   if sudo -v > /dev/null ; then 
@@ -155,7 +156,7 @@ function util::confirm_requirements() {
     ## Install the macOS command line tools if necessary
     util::debug "Testing for command line tools."
     if ! /usr/bin/xcode-select -p &>/dev/null ; then 
-      util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and the script requires them.\n"
+      util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and they are required.\n"
       if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${green}Installing command line tools${noColour}...\n"
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
