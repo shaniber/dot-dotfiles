@@ -1,0 +1,35 @@
+OPTIONS=showexp,showscore,time,color
+OPTIONS=autodig
+OPTIONS:fruit:nectarine
+OPTIONS=msg_window:reversed
+OPTIONS=number_pad:1
+OPTIONS=suppress_alert:3.4.3
+OPTIONS=lit_corridor
+OPTIONS=hilite_pet
+OPTIONS=pettype:none
+OPTIONS=dogname:Pudge
+OPTIONS=catname:Sox
+OPTIONS=horsename:Jingles
+OPTIONS=hilite_pile
+OPTIONS=hitpointbar
+OPTIONS=sortloot:full
+OPTIONS=windowtype:curses
+
+OPTIONS=menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
+OPTIONS=autopickup,pickup_types:$
+OPTIONS=name:shaniber
+## Always pick these:
+AUTOPICKUP_EXCEPTION="<.*magic lamp.*"
+AUTOPICKUP_EXCEPTION="<.*wand of wishing.*"
+AUTOPICKUP_EXCEPTION="<.*wand of death.*"
+AUTOPICKUP_EXCEPTION="<.*wand of polymorph.*"
+## Don't pick these:
+AUTOPICKUP_EXCEPTION=">.*worthless piece of.*"
+AUTOPICKUP_EXCEPTION=">.*loadstone.*"
+AUTOPICKUP_EXCEPTION=">.*flint stone.*"

@@ -20,6 +20,9 @@ readonly bold reverse red orange yellow green cyan blue magenta white noColour
 ## Set to 1 to enable debugging
 DEBUG=${DEBUG-0}
 
+## Set to 1 to skip the warning dialog
+YESIAMSHANE=${YESIAMSHANE-0}
+
 ## Useful globals
 dotfiles_prefix="${HOME}/.dotfiles"
 
@@ -123,6 +126,20 @@ function util::confirm_requirements() {
     util::error "Please run this script from the root of this repository."
     util::usage
     exit 1
+  fi
+
+  ## Ensure that we're being executed by someone that actually wants to use these to change their system.
+  if ! [ "${YESIAMSHANE}" = 1 ] || ! [ "${current_user}" == "ssd" ] ; then 
+    util::print "Hey! Thanks for checking out this config file set up.\n"
+    util::print "Before we go on, I want to confirm that you're either:\n\n" 
+    util::print "  a) The owner of the original repository (aka shane doucette) or\n"
+    util::print "  b) Someone who read the README.md that says you use these at your own risk.\n\n"
+    if util::confirm ; then 
+      util::print "Then let us begin.\n\n"
+    else 
+      util::print "A wise choice. Bailing out!\n\n"
+      exit 74
+    fi
   fi
 
   ## Check our operating system.
@@ -265,7 +282,7 @@ function link_config_file () {
   dotfile="${1}"
   util::print "${blue}[ACTION]${noColour} Installing .${dotfile}.\n"
   if [ -f "${HOME}/.${dotfile}" ] && [ ! -L "${HOME}/.${dotfile}" ]; then
-    util::print "         (Preserving existing at .${dotfile}.bak-${ds}\n"
+    util::print "         (Preserving existing at .${dotfile}.BAK-${ds}\n"
     mv "${HOME}/.${dotfile}" "${HOME}/.${dotfile}.bak-${ds}"
   else 
     if ${readlink} "${HOME}/.${dotfile}" | /usr/bin/grep -q "${dotfiles_prefix}/dot.${dotfile}" ; then
@@ -353,11 +370,6 @@ util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
 
-## Create local config files if needed.
-create_local_config_file "bash_profile"
-create_local_config_file "gitconfig"
-create_local_config_file "bashrc"
-
 ## Create $HOME/bin directory.
 util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
@@ -370,6 +382,35 @@ if ! [ -d "${HOME}/bin" ] ; then
     util::print "  ${magenta}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}.\n"
   fi 
 fi
+
+## Create $HOME/.ssh directory.
+util::debug "Creating ${HOME}/.ssh directory."
+if ! [ -d "${HOME}/.ssh" ] ; then 
+  util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh${noColour}.\n"
+  mkdir "${HOME}/.ssh"
+  chmod 700 "${HOME}/.ssh"
+else 
+  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh${noColour} already present. Skipping...\n"
+fi
+
+## Create $HOME/.ssh/keys and subdirectories.
+util::debug "Creating ${HOME}/.ssh/keys and subdirectories."
+if ! [ -d "${HOME}/.ssh/keys" ] ; then 
+  util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/keys${noColour}.\n"
+  mkdir -p "${HOME}/.ssh/keys/{tauntedechoes,ruddystream}"
+else 
+  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
+fi
+
+## Figure out a way to automatically download my ssh keys from someplace secure... :(
+util::print "\n\nThis script will now pause until you manually copy in your ssh keys.\n"
+util::pause
+
+## Create local config files if needed.
+create_local_config_file "bash_profile"
+create_local_config_file "gitconfig"
+create_local_config_file "bashrc"
+create_local_config_file "ssh/config"
 
 ## Install recommended but optional software
 if [ "${os}" = "macos" ] ; then 
@@ -483,6 +524,11 @@ if [ "${os}" = "macos" ] ; then
     } >> "${HOME}/.bashrc_local"
   fi
 
+  ## Add macOS specific SSH configuration 
+  util::debug "Adding macOS specific SSH config to ${HOME}/.ssh/config_local"
+  printf "## macOS specific SSH config\n" >> "${HOME}/.ssh/config_local"
+  printf "Host *\n" >> "${HOME}/.ssh/config_local"
+  printf "    UseKeychain yes\n" >> "${HOME}/.ssh/config_local"
 fi
 
 ## Install dot files proper.
@@ -494,6 +540,9 @@ link_config_file "gitignore"
 link_config_file "inputrc"
 link_config_file "vimrc"
 link_config_file "vim"
+link_config_file "ssh/config"
+link_config_file "ssh/config_git_hosts"
+link_config_file "nethackrc"
 
 ## Install git-completion and git-prompt
 download_git_completion "git-completion.bash"

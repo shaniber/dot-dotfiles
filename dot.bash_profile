@@ -67,7 +67,6 @@ source "${HOME}/.dotfiles/functions/functions.gen"
 case "$os" in 
 linux)
   source "${HOME}/.dotfiles/functions/functions.linux"
-
   ;;
 macos)
   # Hide the “default interactive shell is now zsh” warning on macOS.
@@ -84,7 +83,6 @@ macos)
 esac
 
 alias ls-la='ls -la'
-alias v='vagrant'
 alias ds='date +%Y%m%d%H%M%S'
 alias alldu='du -sck .[!.]* *'
 alias dumphttp="sudo tcpdump -A -s 0 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'"	
@@ -129,5 +127,5 @@ fi
 
 export PATH VISUAL EDITOR GREP_COLORS PS1 PROMPT_COMMAND
 
-echo;uptime; echo
+echo ; uptime ; echo
 
