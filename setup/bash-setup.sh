@@ -375,9 +375,10 @@ util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
   util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
   if util::confirm " ${orange}[QUERY]${noColour} Create it?" ; then 
-    true 
     util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
     mkdir "${HOME}/bin"
+    util::print "${blue}[ACTION]${noColour} Copying in some useful scripts.\n"
+    cp "${dotfiles_prefix}/bin/*" "${HOME}/bin"
   else 
     util::print "  ${magenta}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}.\n"
   fi 
