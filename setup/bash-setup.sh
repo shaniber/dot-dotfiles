@@ -533,6 +533,7 @@ if command -v code &>/dev/null ; then
     install_vscode_extension ms-vsliveshare.vsliveshare-pack
     install_vscode_extension randrade23.beautify-json
     install_vscode_extension vscodevim.vim
+    install_vscode_extension remisa.shellman
   fi
 fi
 
