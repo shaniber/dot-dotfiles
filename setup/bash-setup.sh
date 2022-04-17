@@ -529,6 +529,10 @@ if command -v code &>/dev/null ; then
     install_vscode_extension richterger.perl
     install_vscode_extension timonwong.shellcheck
     install_vscode_extension yzhang.markdown-all-in-one
+    install_vscode_extension emilast.logfilehighlighter
+    install_vscode_extension ms-vsliveshare.vsliveshare-pack
+    install_vscode_extension randrade23.beautify-json
+    install_vscode_extension vscodevim.vim
   fi
 fi
 
