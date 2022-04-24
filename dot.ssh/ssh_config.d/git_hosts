@@ -8,8 +8,8 @@ Host bitbucket.org
     IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 
 ## GitHub
-# Default GitHub (shaniber)
-Host github.com
+# shaniber GitHub 
+Host shaniber.github.com
     HostName github.com
     IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 

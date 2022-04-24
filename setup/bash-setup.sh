@@ -129,8 +129,9 @@ function util::confirm_requirements() {
   fi
 
   ## Ensure that we're being executed by someone that actually wants to use these to change their system.
-  if ! [ "${YESIAMSHANE}" = 1 ] || ! [ "${current_user}" == "ssd" ] ; then 
-    util::print "Hey! Thanks for checking out this config file set up.\n"
+  util::debug "Am I being run by someone who claims to be Shane? (${YESIAMSHANE})"
+  if ! [ "${YESIAMSHANE}" = 1 ] ; then 
+    util::print "\nHey! Thanks for checking out this config file set up.\n"
     util::print "Before we go on, I want to confirm that you're either:\n\n" 
     util::print "  a) The owner of the original repository (aka shane doucette) or\n"
     util::print "  b) Someone who read the README.md that says you use these at your own risk.\n\n"
@@ -252,7 +253,7 @@ function util::confirm_requirements() {
     if [ -L "${dotfiles_prefix}" ] || [ -d "${dotfiles_prefix}" ] ; then
       # Check if the README exists and if it is our readme file.
       if [ -f "${dotfiles_prefix}/README.md" ] ; then
-        if ! /usr/bin/grep -Fxq "# dot.dotfiles" "${dotfiles_prefix}/README.md" ; then
+        if ! /usr/bin/grep -Fxq "# dot-dotfiles" "${dotfiles_prefix}/README.md" ; then
           util::error "${dotfiles_prefix} exists, but has unexpected content. Bailing out!"
           exit 2
         else 
@@ -285,10 +286,26 @@ function link_config_file () {
     util::print "         (Preserving existing at .${dotfile}.BAK-${ds}\n"
     mv "${HOME}/.${dotfile}" "${HOME}/.${dotfile}.bak-${ds}"
   else 
-    if ${readlink} "${HOME}/.${dotfile}" | /usr/bin/grep -q "${dotfiles_prefix}/dot.${dotfile}" ; then
+    if ${readlink} "${HOME}/.${dotfile}" | /usr/bin/grep -q "${dotfiles_prefix}/dot-${dotfile}" ; then
       util::warn ".${dotfile} exists and is symlinked to the expected installation directory. Skipping..."
     else 
       ln -s "${dotfiles_prefix}/dot.${dotfile}" "${HOME}/.${dotfile}"
+    fi
+  fi
+  sleep 1
+}
+
+function link_prefs_file () {
+  prefsplist="${1}.plist"
+  util::print "${blue}[ACTION]${noColour} Installing ${HOME}/Library/Preferences/${prefsplist}.\n"
+  if [ -f "${HOME}/Library/Preferences/${prefsplist}" ] && [ ! -L "${HOME}/Library/Preferences/${prefsplist}" ]; then
+    util::print "         (Preserving existing at ${prefsplist}.BAK-${ds}\n"
+    mv "${HOME}/Library/Preferences/${prefsplist}" "${HOME}/Library/Preferences/${prefsplist}.bak-${ds}"
+  else 
+    if ${readlink} "${HOME}/Library/Preferences/${prefsplist}" | /usr/bin/grep -q "${dotfiles_prefix}/Library-Preferences/${prefsplist}" ; then
+      util::warn "${prefsplist} exists and is symlinked to the expected installation directory. Skipping..."
+    else 
+      ln -s "${dotfiles_prefix}/Library-Preferences/${prefsplist}" "${HOME}/Library/Preferences/${prefsplist}"
     fi
   fi
   sleep 1
@@ -353,6 +370,7 @@ util::debug "        brew_prefix:  ${brew_prefix}"
 util::debug "        brew_repo:    ${brew_repo}"
 util::debug "        brew_bin:     ${brew_bin}"
 util::debug "        current_user: ${current_user}"
+util::debug "        YESIAMSHANE:  ${YESIAMSHANE}"
 
 util::print "Setting up your fancy-schmancy new \n\n"
 util::print "       ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S${noColour}\n"
@@ -394,6 +412,15 @@ else
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh${noColour} already present. Skipping...\n"
 fi
 
+## Create $HOME/.ssh/ssh_config.d.
+util::debug "Creating ${HOME}/.ssh/ssh_config.d."
+if ! [ -d "${HOME}/.ssh/ssh_config.d" ] ; then 
+  util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/ssh_config.d${noColour}.\n"
+  mkdir -p "${HOME}/.ssh/ssh_config.d"
+else 
+  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/ssh_config.d${noColour} already present. Skipping...\n"
+fi
+
 ## Create $HOME/.ssh/keys and subdirectories.
 util::debug "Creating ${HOME}/.ssh/keys and subdirectories."
 if ! [ -d "${HOME}/.ssh/keys" ] ; then 
@@ -403,6 +430,8 @@ else
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
 fi
 
+
+
 ## Figure out a way to automatically download my ssh keys from someplace secure... :(
 util::print "\n\nThis script will now pause until you manually copy in your ssh keys.\n"
 util::pause
@@ -411,7 +440,7 @@ util::pause
 create_local_config_file "bash_profile"
 create_local_config_file "gitconfig"
 create_local_config_file "bashrc"
-create_local_config_file "ssh/config"
+create_local_config_file "ssh/ssh_config.d/"
 
 ## Install recommended but optional software
 if [ "${os}" = "macos" ] ; then 
@@ -526,10 +555,10 @@ if [ "${os}" = "macos" ] ; then
   fi
 
   ## Add macOS specific SSH configuration 
-  util::debug "Adding macOS specific SSH config to ${HOME}/.ssh/config_local"
-  printf "## macOS specific SSH config\n" >> "${HOME}/.ssh/config_local"
-  printf "Host *\n" >> "${HOME}/.ssh/config_local"
-  printf "    UseKeychain yes\n" >> "${HOME}/.ssh/config_local"
+  util::debug "Adding macOS specific SSH config to ${HOME}/.ssh/ssh_config.d/_local"
+  printf "## macOS specific SSH config\n" >> "${HOME}/.ssh/ssh_config.d/_local"
+  printf "Host *\n" >> "${HOME}/.ssh/ssh_config.d/_local"
+  printf "    UseKeychain yes\n" >> "${HOME}/.ssh/ssh_config.d/_local"
 fi
 
 ## Install dot files proper.
@@ -542,8 +571,11 @@ link_config_file "inputrc"
 link_config_file "vimrc"
 link_config_file "vim"
 link_config_file "ssh/config"
-link_config_file "ssh/config_git_hosts"
+link_config_file "ssh/ssh_config.d/git_hosts"
 link_config_file "nethackrc"
+
+## Install ~/Library/Preferences files
+link_prefs_file "com.googlecode.iterm2"
 
 ## Install git-completion and git-prompt
 download_git_completion "git-completion.bash"
@@ -552,14 +584,19 @@ download_git_completion "git-prompt.sh"
 ## Offer to install some useful software
 if [ "${os}" == "macos" ] ; then 
   if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; then 
+
+    ### Command line utilities
+    brew_install "jq"                   # command line json parser
     brew_install "shellcheck"           # for checking shell scripts
+    brew_install "pandoc"               # markup format conversion
+
+    ### GUI apps
     brew_install "rectangle"            # macOS window manager
     brew_install "syntax-highlight"     # code syntax highlighting in quicklook
     brew_install "qlmarkdown"           # markdown rendering in quicklook
     brew_install "spotify"              # streaming music
     brew_install "discord"              # discord chat
     brew_install "iterm2"               # better terminal program
-    brew_install "pandoc"               # markup format conversion
     brew_install "visual-studio-code"   # Visual Studio Code
   fi
 fi
@@ -568,6 +605,12 @@ fi
 util::debug "Offering to install Visual Studio Code extensions if code is installed."
 if ! command -v code &>/dev/null && [ -d "/Applications/Visual Studio Code.app" ] ; then 
   if util::confirm "${orange}[QUERY]${noColour} Visual Studio Code is installed... activate the CLI tool?" ; then 
+#    if ! [ -d /usr/local/bin ] ; then 
+#      util::warn "${green}/usr/local/bin does not exist."
+#      if util::confirm "${orange}[QUERY]${noColour} Create it?" ; then 
+#        if ! sudo mkdir -p -m 775 /usr/local/bin ; then 
+#          util::warn "Could not create /usr/local/bin/
+#
     sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
   fi
 fi

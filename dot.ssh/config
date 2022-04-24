@@ -1,10 +1,10 @@
 ### SSH Config
 
 ## Git host configurations
-Include ./config_git_hosts
+Include ./ssh_config.d/git_hosts
 
 ## Local SSH configurations
-Include ./config_local
+Include ./ssh_config.d/local
 
 ## General Config
 Host *
