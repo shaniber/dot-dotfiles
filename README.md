@@ -17,3 +17,8 @@ Have you read all of that, and you _still_ want to use these? Alright, go hard.
 1. Change into the directory that you've pulled this repository from.
 2. Run the script `setup/bash-setup.sh`. 
 
+## Usage
+First, the dotfiles themselves should never be modified. The represent the platonic ideal of a dotfile.  Instead, you should only modify the .\*\_local file that corresponds to the file you would normally modify. This keeps your local modifications local, and keeps the multi-system generic configurations pristine. 
+
+Next, there are several configuration files that don't support including other files, that might be modified as you use the programs they correspond to. If this is the case, consider if these are local changes or generic changes, and commit them back to your copy of the repository as appropriate. 
+
