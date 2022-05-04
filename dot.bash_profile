@@ -2,6 +2,10 @@
 
 # shellcheck shell=bash
 
+# If not running interactively, don't do anything
+# Ref: https://github.com/skx/dotfiles/blob/master/.bash_profile
+[ -z "$PS1" ] && return
+
 ## Import configuration for non-interactive shells.
 if [ -f "${HOME}/.bashrc" ] ; then
     source "${HOME}/.bashrc"

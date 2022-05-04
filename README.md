@@ -22,3 +22,9 @@ First, the dotfiles themselves should never be modified. The represent the plato
 
 Next, there are several configuration files that don't support including other files, that might be modified as you use the programs they correspond to. If this is the case, consider if these are local changes or generic changes, and commit them back to your copy of the repository as appropriate. 
 
+## Notes
+There's a lot of other dotfiles repos out there. I've borrowed ideas from a lot of them. Here's a few that I've liked over the years.
+
+- https://github.com/skx/dotfiles/
+- https://github.com/unrolled/dotfiles
+- https://github.com/mathiasbynens/dotfiles
