@@ -613,6 +613,11 @@ if ! command -v code &>/dev/null && [ -d "/Applications/Visual Studio Code.app" 
 #
     sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "/usr/local/bin/code"
   fi
+
+  if util::confirm "${orange}[QUERY]${noColour} Also fix key repeat for Visual Studio Code?" ; then
+    defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false              # For VS Code
+    defaults delete -g ApplePressAndHoldEnabled                                           # If necessary, reset global default
+  fi
 fi
 
 if command -v code &>/dev/null ; then
