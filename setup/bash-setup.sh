@@ -38,7 +38,7 @@ if [[ "$architecture" =~ "Apple" ]] ; then
   brew_repo="${brew_prefix}"
   brew_bin="${brew_prefix}/bin"
 else 
-  brew_prefix="/usr/local/"
+  brew_prefix="/usr/local"
   brew_repo="${brew_prefix}/Homebrew"
   brew_bin="${brew_prefix}/bin"
 fi
