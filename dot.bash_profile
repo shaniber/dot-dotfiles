@@ -65,6 +65,18 @@ case $(hostname) in
   ;;
 esac
 
+case "${USER}" in
+administrator)
+  userColour="${reverse}${red}"
+  ;;
+ssd|shaned|shanedoucette|shane.doucette)
+  userColour="${green}"
+  ;;
+*)
+  userColour="${cyan}"
+  ;;
+esac
+
 # User specific aliases and functions
 source "${HOME}/.dotfiles/functions/functions.gen"
 
