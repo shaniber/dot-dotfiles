@@ -394,7 +394,7 @@ if ! [ -d "${HOME}/bin" ] ; then
   util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
   if util::confirm " ${orange}[QUERY]${noColour} Create it?" ; then 
     util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
-    mkdir "${HOME}/bin"
+    mkdir "${HOME}"/bin
     util::print "${blue}[ACTION]${noColour} Copying in some useful scripts.\n"
     cp "${dotfiles_prefix}/bin/*" "${HOME}/bin"
   else 
@@ -406,7 +406,7 @@ fi
 util::debug "Creating ${HOME}/.ssh directory."
 if ! [ -d "${HOME}/.ssh" ] ; then 
   util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh${noColour}.\n"
-  mkdir "${HOME}/.ssh"
+  mkdir "${HOME}"/.ssh
   chmod 700 "${HOME}/.ssh"
 else 
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh${noColour} already present. Skipping...\n"
@@ -416,7 +416,7 @@ fi
 util::debug "Creating ${HOME}/.ssh/ssh_config.d."
 if ! [ -d "${HOME}/.ssh/ssh_config.d" ] ; then 
   util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/ssh_config.d${noColour}.\n"
-  mkdir -p "${HOME}/.ssh/ssh_config.d"
+  mkdir -p "${HOME}"/.ssh/ssh_config.d
 else 
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/ssh_config.d${noColour} already present. Skipping...\n"
 fi
@@ -425,7 +425,7 @@ fi
 util::debug "Creating ${HOME}/.ssh/keys and subdirectories."
 if ! [ -d "${HOME}/.ssh/keys" ] ; then 
   util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/keys${noColour}.\n"
-  mkdir -p "${HOME}/.ssh/keys/{tauntedechoes,ruddystream}"
+  mkdir -p "${HOME}"/.ssh/keys/{tauntedechoes,ruddystream}
 else 
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
 fi
