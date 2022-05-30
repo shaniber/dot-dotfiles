@@ -396,7 +396,10 @@ if ! [ -d "${HOME}/bin" ] ; then
     util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
     mkdir "${HOME}/bin"
     util::print "${blue}[ACTION]${noColour} Copying in some useful scripts.\n"
-    cp "${dotfiles_prefix}/bin/*" "${HOME}/bin"
+    if [ "${os}" = "macos" ] ; then 
+      cp "${dotfiles_prefix}/bin/mac/*" "${HOME}/bin"
+    fi
+    cp "${dotfiles_prefix}/bin/generic/*" "${HOME}/bin"
   else 
     util::print "  ${magenta}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}.\n"
   fi 
