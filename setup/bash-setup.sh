@@ -603,6 +603,8 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
   fi
 fi
 
+## TODO: Offer to install some nice vim plugins. 
+
 ## If VSCode is installed, then install the CLI tool and some extensions as well. 
 util::debug "Offering to install Visual Studio Code extensions if code is installed."
 if ! command -v code &>/dev/null && [ -d "/Applications/Visual Studio Code.app" ] ; then 
