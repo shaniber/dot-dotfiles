@@ -585,9 +585,8 @@ download_git_completion "git-completion.bash"
 download_git_completion "git-prompt.sh"
 
 ## Offer to install some useful software
-if [ "${os}" == "macos" ] ; then 
-  if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; then 
-
+if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; then 
+  if [ "${os}" == "macos" ] ; then 
     ### Command line utilities
     brew_install "jq"                   # command line json parser
     brew_install "shellcheck"           # for checking shell scripts
