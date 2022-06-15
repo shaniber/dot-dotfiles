@@ -1,14 +1,14 @@
 ### SSH Config
 
+## General Config
+Host *
+    PreferredAuthentications publickey,keyboard-interactive
+    AddKeysToAgent yes
+    IdentitiesOnly yes
+
 ## Git host configurations
 Include ./ssh_config.d/git_hosts
 
 ## Local SSH configurations
-Include ./ssh_config.d/local
-
-## General Config
-Host *
-    PreferredAuthentications publickey
-    IdentitiesOnly yes
-    AddKeysToAgent yes
+Include ./ssh_config.d/_local
 
