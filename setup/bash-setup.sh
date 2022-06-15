@@ -433,8 +433,6 @@ else
   util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
 fi
 
-
-
 ## Figure out a way to automatically download my ssh keys from someplace secure... :(
 util::print "\n\nThis script will now pause until you manually copy in your ssh keys.\n"
 util::pause
