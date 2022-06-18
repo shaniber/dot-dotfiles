@@ -58,3 +58,8 @@ set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set ls=2
 au FileType javascript setl sw=2 sts=2 et
 
+""" Include any local vimrc configurations
+let $LOCALFILE=expand("~/.vimrc_local")
+if filereadable($LOCALFILE)
+    source $LOCALFILE
+endif

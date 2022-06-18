@@ -441,6 +441,7 @@ util::pause
 create_local_config_file "bash_profile"
 create_local_config_file "gitconfig"
 create_local_config_file "bashrc"
+create_local_config_file "vimrc"
 create_local_config_file "ssh/ssh_config.d/"
 
 ## Install recommended but optional software
