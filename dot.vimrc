@@ -7,7 +7,6 @@
 " http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 
 """ Vundle
-"set nocompatible
 "filetype off
 
 " set the runtime path to include Vundle and initialize.
@@ -23,6 +22,8 @@
 "call vundle#end()
 "filetype plugin indent on
 
+""" Remove vi compatibility mode.
+set nocompatible
 
 """ Tabs
 set tabstop=4
@@ -54,7 +55,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 """ Other stuff, I guess.
 set ruler
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+#set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set ls=2
 au FileType javascript setl sw=2 sts=2 et
 
