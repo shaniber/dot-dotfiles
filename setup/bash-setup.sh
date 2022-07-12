@@ -607,6 +607,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "iterm2"               # better terminal program
     brew_install "visual-studio-code"   # Visual Studio Code
     brew_install "canva"                # Canva design tool
+    brew_install "pinta"                # Basic paint / drawing
   fi
 fi
 
