@@ -373,14 +373,21 @@ util::debug "        current_user: ${current_user}"
 util::debug "        YESIAMSHANE:  ${YESIAMSHANE}"
 
 util::print "Setting up your fancy-schmancy new \n\n"
-util::print "       ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S${noColour}\n"
-util::print "       ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour}\n"
-util::print "       ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour}\n"
-util::print "       ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour}\n"
-util::print "       ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour}\n"
-util::print "       ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour} - ${yellow}T${noColour}\n"
-util::print "       ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S - ${red}D${noColour} - ${orange}O${noColour}\n"
-util::print "       ${orange}O${noColour} - ${yellow}T${noColour} - ${green}F${noColour} - ${cyan}I${noColour} - ${blue}L${noColour} - ${magenta}E${noColour} - ${white}S${noColour} - ${red}D${noColour}\n\n"
+
+util::print "${red}  @@@@@@@    @@@@@@   @@@@@@@  @@@@@@@@  @@@  @@@       @@@@@@@@   @@@@@@  \n"
+util::print "${orange}  @@@@@@@@  @@@@@@@@  @@@@@@@  @@@@@@@@  @@@  @@@       @@@@@@@@  @@@@@@@  \n"
+util::print "${yellow}  @@!  @@@  @@!  @@@    @@!    @@!       @@!  @@!       @@!       !@@      \n"
+util::print "${green}  !@!  @!@  !@!  @!@    !@!    !@!       !@!  !@!       !@!       !@!      \n"
+util::print "${cyan}  @!@  !@!  @!@  !@!    @!!    @!!!:!    !!@  @!!       @!!!:!    !!@@!!   \n"
+util::print "${blue}  !@!  !!!  !@!  !!!    !!!    !!!!!:    !!!  !!!       !!!!!:     !!@!!!  \n"
+util::print "${magenta}  !!:  !!!  !!:  !!!    !!:    !!:       !!:  !!:       !!:            !:! \n"
+util::print "${red}  :!:  !:!  :!:  !:!    :!:    :!:       :!:   :!:      :!:           !:!  \n"
+util::print "${orange}   :::: ::  ::::: ::     ::     ::        ::   :: ::::   :: ::::  :::: ::  \n"
+util::print "${yellow}   :: :  :    : :  :      :      :        :    : :: : :  : :: ::   :: : :   \n"
+util::print "${noColour}\n"
+
+
+
 
 util::print "(Yes, I was bored. Be thankful I'm not proficient with ${bold}${reverse}tput${noColour} yet).\n"
 
@@ -441,6 +448,7 @@ util::pause
 create_local_config_file "bash_profile"
 create_local_config_file "gitconfig"
 create_local_config_file "bashrc"
+create_local_config_file "vimrc"
 create_local_config_file "ssh/ssh_config.d/"
 
 ## Install recommended but optional software
