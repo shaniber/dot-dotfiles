@@ -1,6 +1,6 @@
 # dot-dotfiles
 
-A collection of config files, custom to me. You probably shouldn't use them. In fact, at this point, I am specifically waiving any responsibility for these, and offering no warranties, explicit or implied. If you use these, changes will be made to your system and account that can break a lot of things for you.  
+A collection of _extremely opinionated_ config files, custom to me. You probably shouldn't use them. In fact, at this point, I am specifically waiving any responsibility for these, and offering no warranties, explicit or implied. If you use these, changes will be made to your system and account that can break a lot of things for you.  
 
 **USE THESE AT YOUR OWN RISK**, and don't come to me if something gets f\*\*\*ed up. I've warned you, and unless you pay me, I'm probaby just going to tell you "that sucks and I'm sorry, but you read the README where I said don't use these, right?"  
 
