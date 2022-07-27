@@ -597,6 +597,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "jq"                   # command line json parser
     brew_install "shellcheck"           # for checking shell scripts
     brew_install "pandoc"               # markup format conversion
+    brew_install "bat"                  # spiffy cat replacement
 
     ### GUI apps
     brew_install "rectangle"            # macOS window manager
@@ -608,6 +609,8 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "visual-studio-code"   # Visual Studio Code
     brew_install "canva"                # Canva design tool
     brew_install "pinta"                # Basic paint / drawing
+  else 
+    util::print "Oops... no software for this OS (${os}) yet.\n"
   fi
 fi
 
@@ -634,17 +637,17 @@ fi
 
 if command -v code &>/dev/null ; then
   if util::confirm "${orange}[QUERY]${noColour} Install Visual Studio Code extentions?" ; then 
-    install_vscode_extension mechatroner.rainbow-csv
-    install_vscode_extension oderwat.indent-rainbow
-    install_vscode_extension richterger.perl
-    install_vscode_extension timonwong.shellcheck
-    install_vscode_extension yzhang.markdown-all-in-one
-    install_vscode_extension emilast.logfilehighlighter
-    install_vscode_extension ms-vsliveshare.vsliveshare-pack
-    install_vscode_extension randrade23.beautify-json
-    install_vscode_extension vscodevim.vim
-    install_vscode_extension remisa.shellman
-    install_vscode_extension vscode-icons-team.vscode-icons
+    install_vscode_extension "mechatroner.rainbow-csv"
+    install_vscode_extension "oderwat.indent-rainbow"
+    install_vscode_extension "richterger.perl"
+    install_vscode_extension "timonwong.shellcheck"
+    install_vscode_extension "yzhang.markdown-all-in-one"
+    install_vscode_extension "emilast.logfilehighlighter"
+    install_vscode_extension "ms-vsliveshare.vsliveshare-pack"
+    install_vscode_extension "randrade23.beautify-json"
+    install_vscode_extension "vscodevim.vim"
+    install_vscode_extension "remisa.shellman"
+    install_vscode_extension "vscode-icons-team.vscode-icons"
   fi
 fi
 
