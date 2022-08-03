@@ -32,3 +32,10 @@ There's a lot of other dotfiles repos out there. I've borrowed ideas from a lot 
 Here's an interesting article on Atlassian about how to use git to manage your configuration files. This might be a possible direction to take this repo, if only for experimentation.  
 
 - https://www.atlassian.com/git/tutorials/dotfiles
+
+## To Do
+- Decide how to deal with vim plugins. 
+  - Download when desired wanted?
+  - Keep a version and install it?
+  - Add the installed version to `dot-vim` and commit?
+
