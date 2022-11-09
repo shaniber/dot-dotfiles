@@ -26,7 +26,6 @@ Next, there are several configuration files that don't support including other f
 There's a lot of other dotfiles repos out there. I've borrowed ideas from a lot of them. Here's a few that I've liked over the years.  
 
 - https://github.com/skx/dotfiles/
-- https://github.com/unrolled/dotfiles
 - https://github.com/mathiasbynens/dotfiles
 
 Here's an interesting article on Atlassian about how to use git to manage your configuration files. This might be a possible direction to take this repo, if only for experimentation.  
