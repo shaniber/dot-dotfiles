@@ -6,7 +6,7 @@ A collection of _extremely opinionated_ config files, custom to me. You probably
 
 ## Installation
 
-**NOTE 1:** The installation script relies on another of my little projects, [bash-functions-library](https://github.com/shaniber/bash-functions/library/). You'll need to pull that in as a submodule as well after you've cloned this repo, with `git submodule update`.  
+**NOTE 1:** The installation script relies on another of my little projects, [bash-functions-library](https://github.com/shaniber/bash-functions-library/). You'll need to pull that in as a submodule as well after you've cloned this repo, with `git submodule update`.  
 
 **NOTE 2:** The installation script is extremely opinionated about what goes where. It will offer to install a lot of software, some of which it needs to complete its installations. It will offer to create empty local config file includes, or use existing ones. It will try to save any existing config files that exist with `.BAK-{DateStamp}` extensions, but doesn't make any promises that it will succeed. It doesn't clean up after itself if anything fails, but it will tell you what it's doing as it's doing it so that you can suss out what's been changed if something goes awry.  
 
