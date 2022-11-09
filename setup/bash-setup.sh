@@ -467,7 +467,7 @@ if [ "${os}" = "macos" ] ; then
         fi
       else 
         if [ "${sudoer}" ] ; then 
-          util::print "  ${green}${reverse}[TODO]${noColour} Install base manually.\n"
+          util::print "  ${green}${reverse}[TODO]${noColour} Install bash manually.\n"
         else
           util::warn "Cannot install bash. Please install manually."
         fi
@@ -594,21 +594,26 @@ download_git_completion "git-prompt.sh"
 if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; then 
   if [ "${os}" == "macos" ] ; then 
     ### Command line utilities
-    brew_install "jq"                   # command line json parser
-    brew_install "shellcheck"           # for checking shell scripts
-    brew_install "pandoc"               # markup format conversion
-    brew_install "bat"                  # spiffy cat replacement
+    brew_install "bat"                  # spiffy cat replacement.
+    brew_install "dialog"               # Ncurses widgets. 
+    brew_install "helix"                # modal text editor.
+    brew_install "jq"                   # command line json parser.
+    brew_install "shellcheck"           # for checking shell scripts.
+    brew_install "pandoc"               # markup format conversion.
 
     ### GUI apps
-    brew_install "rectangle"            # macOS window manager
-    brew_install "syntax-highlight"     # code syntax highlighting in quicklook
-    brew_install "qlmarkdown"           # markdown rendering in quicklook
-    brew_install "spotify"              # streaming music
-    brew_install "discord"              # discord chat
-    brew_install "iterm2"               # better terminal program
-    brew_install "visual-studio-code"   # Visual Studio Code
-    brew_install "canva"                # Canva design tool
-    brew_install "pinta"                # Basic paint / drawing
+    brew_install "pinta"                # Simple paint program.
+    brew_install "canva"                # Canva design tool.
+    brew_install "discord"              # Discord voice and text chat.
+    brew_install "iterm2"               # Terminal program.
+    brew_install "maccy"                # Clipboard manager.
+    brew_install "obsidian"             # Markdown knowledge base.
+    brew_install "qlmarkdown"           # Markdown rendering in quicklook.
+    brew_install "rectangle"            # Window mover and resizer.
+    brew_install "spotify"              # Streaming music.
+    brew_install "syntax-highlight"     # Code syntax highlighting in quicklook.
+    brew_install "visual-studio-code"   # Visual Studio Code.
+    brew_install "vlc"                  # Multimedia player.
   else 
     util::print "Oops... no software for this OS (${os}) yet.\n"
   fi
