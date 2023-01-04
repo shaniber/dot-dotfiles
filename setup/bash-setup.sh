@@ -528,6 +528,8 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "jq"                   # command line json parser.
     brew_install "shellcheck"           # for checking shell scripts.
     brew_install "pandoc"               # markup format conversion.
+    brew_install "gnupg"                # cryptography.
+    brew_install "hyperkey"             # a fifth modifer key.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
