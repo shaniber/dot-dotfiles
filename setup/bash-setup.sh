@@ -544,6 +544,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "syntax-highlight"     # Code syntax highlighting in quicklook.
     brew_install "visual-studio-code"   # Visual Studio Code.
     brew_install "vlc"                  # Multimedia player.
+    brew_install "gifsicle"             # Gif conversion tools
   else 
     util::print "Oops... no software for this OS (${os}) yet.\n"
   fi
