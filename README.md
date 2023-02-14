@@ -39,4 +39,6 @@ Here's an interesting article on Atlassian about how to use git to manage your c
   - Download when desired wanted?
   - Keep a version and install it?
   - Add the installed version to `dot-vim` and commit?
+- Custom rollback script to remove dotfiles if something goes wrong, or you want to remove things. 
+
 

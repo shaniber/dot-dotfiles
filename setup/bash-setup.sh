@@ -1,7 +1,10 @@
 #!/bin/bash
 
 ###
-# Simple set up script to link dotfiles in a new environment.
+# Set up script for new environment.
+# 
+# This script will install OS specific tools, environment, dotfiles,
+# and software, making an attempt to back up existing environment.
 
 ## Set to 1 to enable debugging
 DEBUG=${DEBUG-0}
