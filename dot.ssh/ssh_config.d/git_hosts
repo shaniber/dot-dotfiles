@@ -13,8 +13,3 @@ Host shaniber.github.com
     HostName github.com
     IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 
-# ruddystream GitHub
-Host ruddystream.github.com
-    HostName github.com
-    IdentityFile ~/.ssh/keys/ruddystream/id_rsa
-
