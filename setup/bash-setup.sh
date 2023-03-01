@@ -117,6 +117,7 @@ function util::confirm_requirements() {
           /usr/bin/tr -d '\n')
         util::debug "Installing ${yellow}${PROD}${noColour}."
         softwareupdate -i "$PROD" --verbose;
+        sudo /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
         rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
       else 
         # Can't proceed without command line tools, exit.
