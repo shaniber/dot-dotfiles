@@ -2,11 +2,11 @@
 
 A collection of _extremely opinionated_ config files, custom to me. You probably shouldn't use them. In fact, at this point, I am specifically waiving any responsibility for these, and offering no warranties, explicit or implied. If you use these, changes will be made to your system and account that can break a lot of things for you.  
 
-**USE THESE AT YOUR OWN RISK**, and don't come to me if something gets f\*\*\*ed up. I've warned you, and unless you pay me, I'm probaby just going to tell you "that sucks and I'm sorry, but you read the README where I said don't use these, right?"  
+**USE THESE AT YOUR OWN RISK**. I offer no support for you if you use these and have issues. I'm happy to entertain suggestions, or have a friendly chat about why I made decisions on things, but issues or support requests will be closed and ignored. 
 
 ## Installation
 
-**NOTE 1:** The installation script relies on another of my little projects, [bash-functions-library](https://github.com/shaniber/bash-functions-library/). You'll need to pull that in as a submodule as well after you've cloned this repo, with `git submodule update`.  
+**NOTE 1:** The installation script relies heavily on another of my little projects, [bash-functions-library](https://github.com/shaniber/bash-functions-library/). You'll need to pull that in as a submodule as well after you've cloned this repo, with `git submodule update`.  
 
 **NOTE 2:** The installation script is extremely opinionated about what goes where. It will offer to install a lot of software, some of which it needs to complete its installations. It will offer to create empty local config file includes, or use existing ones. It will try to save any existing config files that exist with `.BAK-{DateStamp}` extensions, but doesn't make any promises that it will succeed. It doesn't clean up after itself if anything fails, but it will tell you what it's doing as it's doing it so that you can suss out what's been changed if something goes awry.  
 
