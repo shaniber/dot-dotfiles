@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+timer=${1-"60"}
+notification=${2-"The timer is done!"}
+title="Timer done!"
+subtitle="${timer} seconds have passed."
+soundname="notification-chime"
+
+(
+echo "Timer is set for ${timer} seconds."
+sleep ${timer}
+osascript -e 'display notification "'"${notification}"'" with title "'"${title}"'" subtitle "'"${subtitle}"'" sound name "'"${soundname}"'" ' 
+) &

@@ -1,0 +1,15 @@
+### Git Hosts Config
+
+## Bitbucket
+
+# Default Bitbucket (shaniber)
+Host bitbucket.org
+    HostName bitbucket.org
+    IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
+
+## GitHub
+# shaniber GitHub 
+Host shaniber.github.com
+    HostName github.com
+    IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
+

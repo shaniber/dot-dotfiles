@@ -1,0 +1,4 @@
+[submodule "lib/bash-functions-library"]
+	path = lib/bash-functions-library
+	url = git@github.com:shaniber/bash-functions-library
+	branch = main
