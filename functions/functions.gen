@@ -2,6 +2,13 @@
 
 # shellcheck shell=bash
 
+## function: highlight
+## - highlight text in a stream.
+##   usage: highlight STRING
+highlight() { 
+    /usr/bin/grep --color -ie "$1" -e '^'; 
+}
+
 ## function: extract 
 ## - extract many common archives.
 ##   usage: extract filename.xxx
@@ -101,3 +108,4 @@ listfuncs() {
 	done;
 	echo ""
 }
+
