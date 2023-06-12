@@ -534,6 +534,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "pandoc"               # markup format conversion.
     brew_install "gnupg"                # cryptography.
     brew_install "hyperkey"             # a fifth modifer key.
+    brew_install "gifsicle"             # Gif conversion tools
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
@@ -541,14 +542,13 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "discord"              # Discord voice and text chat.
     brew_install "iterm2"               # Terminal program.
     brew_install "maccy"                # Clipboard manager.
-    brew_install "obsidian"             # Markdown knowledge base.
     brew_install "qlmarkdown"           # Markdown rendering in quicklook.
     brew_install "rectangle"            # Window mover and resizer.
     brew_install "spotify"              # Streaming music.
     brew_install "syntax-highlight"     # Code syntax highlighting in quicklook.
     brew_install "visual-studio-code"   # Visual Studio Code.
     brew_install "vlc"                  # Multimedia player.
-    brew_install "gifsicle"             # Gif conversion tools
+    brew_install "sublime-text"         # Multi-porpoise text editor.
   else 
     util::print "Oops... no software for this OS (${os}) yet.\n"
   fi
