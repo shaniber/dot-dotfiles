@@ -535,6 +535,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "gnupg"                # cryptography.
     brew_install "hyperkey"             # a fifth modifer key.
     brew_install "gifsicle"             # Gif conversion tools
+    brew_install "tree"                 # Tree-style directory viewer.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
