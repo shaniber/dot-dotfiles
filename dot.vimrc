@@ -55,7 +55,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 """ Other stuff, I guess.
 set ruler
-#set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set ls=2
 au FileType javascript setl sw=2 sts=2 et
 

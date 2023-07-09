@@ -135,12 +135,25 @@ function util::confirm_requirements() {
       if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${blue}[ACTION] Installing Homebrew${noColour}...\n"
         sudo mkdir "${brew_repo}"
-        sudo chown -R "${current_user}" "${brew_repo}"
+        sudo chown -R "${current_user}" "${brew_repo}" 
+        directories=(
+          bin etc include lib sbin share var opt
+          share/zsh share/zsh/site-functions
+          var/homebrew var/homebrew/linked
+          Cellar Caskroom Frameworks
+        )
+        for dir in "${directories[@]}" ; do
+          if ! [[ -d ${brew_prefix}/${dir} ]] ; then
+            sudo mkdir "${brew_prefix}/${dir}"
+          fi
+          sudo chown -R "${current_user}" "${brew_prefix}/${dir}"
+        done
+
         /usr/bin/git clone https://github.com/Homebrew/brew.git "${brew_repo}"
+	/bin/ln -sf "${brew_repo}/bin/brew" "${brew_bin}/brew"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew analytics off 
         "${brew_bin}"/brew update --force --quiet
-        "${brew_bin}"/brew tap homebrew/cask
         "${brew_bin}"/brew tap homebrew/cask-versions
         /bin/chmod -R go-w "${brew_prefix}/share/zsh"
         brew_installed=1
