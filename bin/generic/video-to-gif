@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+fullfilename="${1:-NULL}"
+
+if [ "$fullfilename" == "NULL" ] ; then
+  echo "Usage: $0 input-filename"
+  exit 1
+fi
+
+# Check for existance of ffmpeg, convert (imagemagick), and gifsicle
+
+filename=$(basename -- "$fullfilename")
+gifname="${filename%.*}.gif"
+
+ffmpeg -y -i "${fullfilename}" -f image2pipe -vcodec ppm - | convert -delay 2 -loop 0 -layers Optimize - gif:- | gifsicle -d 3 -O3 -o "${gifname}" 
