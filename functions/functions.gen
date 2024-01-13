@@ -2,6 +2,13 @@
 
 # shellcheck shell=bash
 
+## function: highlight
+## - highlight text in a stream.
+##   usage: highlight STRING
+highlight() { 
+    /usr/bin/grep --color -ie "$1" -e '^'; 
+}
+
 ## function: extract 
 ## - extract many common archives.
 ##   usage: extract filename.xxx
@@ -24,6 +31,7 @@ extract() {
 				*.tgz) tar xzf "$1" ;;
 				*.zip) unzip "$1" ;;
 				*.Z) uncompress "$1" ;;
+                *.7z) 7z e "$1" ;;
 				*) echo " ** '$1' cannot be extracted. **" ;;
 			esac
 		else
@@ -101,3 +109,4 @@ listfuncs() {
 	done;
 	echo ""
 }
+

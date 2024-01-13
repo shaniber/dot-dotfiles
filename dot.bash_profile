@@ -106,8 +106,9 @@ alias dumphttp="sudo tcpdump -A -s 0 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<
 alias dumphttpget="sudo tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'"
 alias dumphttppost="sudo tcpdump -s 0 -A 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354)'"
 alias pls='sudo $(history -p \!\!)' 
-alias noc='egrep -v "^\s*(#|$)"'
-alias grep='grep --colour=always'
+alias noc='/usr/bin/egrep -v "^\s*(#|$)"'
+alias grep='/usr/bin/grep --colour=always'
+alias rand='/usr/bin/head -c4 /dev/urandom | /usr/bin/od -An -vtu4'
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease

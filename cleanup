@@ -1,0 +1,17 @@
+/usr/local/bin/brew remove jq
+/usr/local/bin/brew remove oniguruma
+/usr/local/bin/brew remove coreutils
+/usr/local/bin/brew remove gmp
+/usr/local/bin/brew remove bash-completion@2
+/usr/local/bin/brew remove bash
+/usr/local/bin/brew remove shellcheck
+/usr/local/bin/brew remove rectangle
+/usr/local/bin/brew remove syntax-highlight
+/usr/local/bin/brew remove qlmarkdown
+/usr/local/bin/brew remove spotify
+/usr/local/bin/brew remove discord
+/usr/local/bin/brew remove pandoc
+/usr/local/bin/brew remove visual-studio-code
+
+rm ${HOME}/.bash* ${HOME}/.vim* ${HOME}/.git* ${HOME}/.inputrc 
+rm -rf ${HOME}/bin ${HOME}/.ssh
