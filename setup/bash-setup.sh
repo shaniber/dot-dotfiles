@@ -8,6 +8,9 @@
 
 ## Set to 1 to enable debugging
 DEBUG=${DEBUG-0}
+if [ "${DEBUG}" = 1 ] ; then 
+  set -ea
+fi
 
 ## Set to 1 to skip the warning dialog
 YESIAMSHANE=${YESIAMSHANE-0}
@@ -106,7 +109,7 @@ function util::confirm_requirements() {
     util::debug "Testing for command line tools."
     if ! /usr/bin/xcode-select -p &>/dev/null ; then 
       util::print "${blue}[ACTION]${noColour} The Xcode command line tools are not installed, and they are required.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
+      if util::confirm "${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${green}Installing command line tools${noColour}...\n"
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
         PROD=$(/usr/sbin/softwareupdate -l |
@@ -132,7 +135,7 @@ function util::confirm_requirements() {
     util::debug "Testing for Homebrew."
     if ! "${brew_bin}"/brew --version &>/dev/null ; then
       util::warn "Homebrew isn't installed."
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with install?" ; then 
+      if util::confirm "${orange}[QUERY]${noColour} Proceed with install?" ; then 
         util::print "${blue}[ACTION] Installing Homebrew${noColour}...\n"
         sudo mkdir "${brew_repo}"
         sudo chown -R "${current_user}" "${brew_repo}" 
@@ -167,7 +170,7 @@ function util::confirm_requirements() {
     util::debug "Testing for coreutils"
     if ! "${brew_bin}"/brew info coreutils | /usr/bin/grep "Poured" &>/dev/null ; then 
       util::warn "Coreutils isn't installed."
-      if util::confirm " ${orange}[QUERY]${noColour} Proceed with installation?" ; then 
+      if util::confirm "${orange}[QUERY]${noColour} Proceed with installation?" ; then 
         util::print "${blue}[ACTION] Installing coreutils via brew${noColour}...\n"
         if ! brew_install "coreutils" ; then 
           util::error "Homebrew coreutils installation failed. Bailing out!"
@@ -219,7 +222,7 @@ function util::confirm_requirements() {
 }
 
 function brew_install() {
-  util::print "  ${green}[BREW]${noColour} Installing ${1}.\n"
+  util::print " ${green}[BREW]${noColour} Installing ${1}.\n"
   util::debug "Attempting ${brew_bin}/brew install ${1}\n"
   "${brew_bin}"/brew install "${1}"
 }
@@ -260,7 +263,7 @@ function create_local_config_file () {
   configfile="${1}"
   util::print "${blue}[ACTION]${noColour} Checking for existing .${configfile}_local.\n"
   if [ -f "${HOME}/.${configfile}_local" ] ; then 
-    if ! util::confirm " ${orange}[QUERY]${noColour} ${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
+    if ! util::confirm "${orange}[QUERY]${noColour} ${HOME}/.${configfile}_local exists. Continue to use it?" ; then 
       util::print "${blue}[ACTION]${noColour} Preserving existing .${configfile}_local as ${green}.${configfile}_local.bak-${ds}${noColour}\n"
       mv "${HOME}/.${configfile}_local" "${HOME}/.${configfile}_local.bak-${ds}"
     else 
@@ -282,7 +285,7 @@ function download_git_completion () {
     gcfile_path="${HOME}/.${gcfile}"
   fi
   if [ -f "${gcfile_path}" ] ; then 
-    if ! util::confirm " ${orange}[QUERY]${noColour} ${gcfile_path} exists. Continue to use it?" ; then 
+    if ! util::confirm "${orange}[QUERY]${noColour} ${gcfile_path} exists. Continue to use it?" ; then 
       util::print "${blue}[ACTION]${noColour} Preserving existing .${gcfile} as ${green}.${gcfile}.bak-${ds}${noColour}\n"
       mv "${gcfile_path}" "${gcfile_path}.bak-${ds}"
     else 
@@ -305,7 +308,7 @@ function install_vscode_extension () {
   ext="${1}"
   util::print "${blue}[ACTION]${noColour} Installing ${ext} for VSCode.\n"
   if ! code --install-extension ${ext} --force &>/dev/null ; then
-    util::warning "${ext} did not install properly."
+    util::warn "${ext} did not install properly."
   fi
 }
 
@@ -344,16 +347,16 @@ util::confirm_requirements
 util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
   util::warn "${green}${HOME}/bin${noColour} does not exist. It is not required, but is recommended."
-  if util::confirm " ${orange}[QUERY]${noColour} Create it?" ; then 
+  if util::confirm "${orange}[QUERY]${noColour} Create it?" ; then 
     util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/bin${noColour}.\n"
     mkdir "${HOME}"/bin
     util::print "${blue}[ACTION]${noColour} Copying in some useful scripts.\n"
     if [ "${os}" = "macos" ] ; then 
-      cp "${dotfiles_prefix}/bin/mac/*" "${HOME}/bin"
+      cp -R "${dotfiles_prefix}"/bin/mac/* "${HOME}/bin"
     fi
-    cp "${dotfiles_prefix}/bin/generic/*" "${HOME}/bin"
+    cp -R "${dotfiles_prefix}"/bin/generic/* "${HOME}/bin"
   else 
-    util::print "  ${magenta}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}.\n"
+    util::print " ${magenta}[INFO]${noColour} Skipping creation of ${green}${HOME}/bin${noColour}.\n"
   fi 
 fi
 
@@ -364,7 +367,7 @@ if ! [ -d "${HOME}/.ssh" ] ; then
   mkdir "${HOME}"/.ssh
   chmod 700 "${HOME}/.ssh"
 else 
-  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh${noColour} already present. Skipping...\n"
+  util::print " ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh${noColour} already present. Skipping...\n"
 fi
 
 ## Create $HOME/.ssh/ssh_config.d.
@@ -373,7 +376,7 @@ if ! [ -d "${HOME}/.ssh/ssh_config.d" ] ; then
   util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/ssh_config.d${noColour}.\n"
   mkdir -p "${HOME}"/.ssh/ssh_config.d
 else 
-  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/ssh_config.d${noColour} already present. Skipping...\n"
+  util::print " ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/ssh_config.d${noColour} already present. Skipping...\n"
 fi
 
 ## Create $HOME/.ssh/keys and subdirectories.
@@ -382,7 +385,7 @@ if ! [ -d "${HOME}/.ssh/keys" ] ; then
   util::print "${blue}[ACTION]${noColour} Create ${green}${HOME}/.ssh/keys${noColour}.\n"
   mkdir -p "${HOME}"/.ssh/keys/{tauntedechoes,ruddystream}
 else 
-  util::print "  ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
+  util::print " ${magenta}[INFO]${noColour} ${green}${HOME}/.ssh/keys${noColour} already present. Skipping...\n"
 fi
 
 ## Figure out a way to automatically download my ssh keys from someplace secure... :(
@@ -401,8 +404,8 @@ if [ "${os}" = "macos" ] ; then
   ## Install bash 4+
   util::debug "Checking for bash installation."
   if ! ${brew_bin}/brew info bash | /usr/bin/grep Poured &>/dev/null ; then 
-    util::print "  ${magenta}[INFO]${noColour} Bash >4 is not required, but is recommended.\n"
-    if util::confirm " ${orange}[QUERY]${noColour} Would you like to install it?" ; then
+    util::print " ${magenta}[INFO]${noColour} Bash >4 is not required, but is recommended.\n"
+    if util::confirm "${orange}[QUERY]${noColour} Would you like to install it?" ; then
       if [ ${brew_installed} ] ; then 
         util::print "${blue}[ACTION]${noColour} using 'brew' to install bash.\n"
         if ! brew_install "bash" ; then 
@@ -418,7 +421,7 @@ if [ "${os}" = "macos" ] ; then
         fi
       fi
     else 
-      util::print "  ${magenta}[INFO]${noColour} Skipping installation of bash.\n"
+      util::print " ${magenta}[INFO]${noColour} Skipping installation of bash.\n"
     fi
   fi
 
@@ -428,8 +431,8 @@ if [ "${os}" = "macos" ] ; then
     util::print "${blue}[ACTION]${noColour} Adding ${brew_bin}/bash to /etc/shells.\n"
     sudo sh -c "echo \"${brew_bin}/bash\" >> /etc/shells"
     if ! [ ${SHELL} = "${brew_bin}"/bash} ] ; then 
-      util::print "  ${magenta}[INFO]${noColour} Changing your shell to ${brew_bin}/bash is not required, but is recommended.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Change your shell to ${brew_bin}/bash?" ; then 
+      util::print " ${magenta}[INFO]${noColour} Changing your shell to ${brew_bin}/bash is not required, but is recommended.\n"
+      if util::confirm "${orange}[QUERY]${noColour} Change your shell to ${brew_bin}/bash?" ; then 
         chsh -s "${brew_bin}/bash"
       fi
     fi
@@ -440,8 +443,8 @@ if [ "${os}" = "macos" ] ; then
   if [ "$(echo "${bash_installed}" | awk -F '.' '{print $1}')" -gt 3 ] ; then
     # Bash 4+ installed, so install bash_completion@2
     if ! [ -f "${brew_prefix}"/etc/profile.d/bash_completion.sh ] ; then
-      util::print "  ${magenta}[INFO]${noColour} bash-completion v2 is not required, but is recommended.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Would you like to install it?" ; then 
+      util::print " ${magenta}[INFO]${noColour} bash-completion v2 is not required, but is recommended.\n"
+      if util::confirm "${orange}[QUERY]${noColour} Would you like to install it?" ; then 
         if [ ${brew_installed} ]; then
           util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion@2.\n"
           brew_install "bash-completion@2"
@@ -454,7 +457,7 @@ if [ "${os}" = "macos" ] ; then
           fi
         fi
       else
-        util::print "  ${magenta}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
+        util::print " ${magenta}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
       fi
     else
       bash_completion_installed=1
@@ -462,8 +465,8 @@ if [ "${os}" = "macos" ] ; then
   else
     # System Bash 3 is installed, so just install bash_completion
     if ! [ -f "${brew_prefix}"/etc/bash_completion ] ; then
-      util::print "  ${magenta}[INFO]${noColour} bash-completion is not required, but is recommended.\n"
-      if util::confirm " ${orange}[QUERY]${noColour} Would you like to install it?" ; then 
+      util::print " ${magenta}[INFO]${noColour} bash-completion is not required, but is recommended.\n"
+      if util::confirm "${orange}[QUERY]${noColour} Would you like to install it?" ; then 
         if [ ${brew_installed} ]; then
           util::print "${blue}[ACTION]${noColour} Using 'brew' to install bash-completion.\n"
           brew_install "bash-completion"
@@ -476,7 +479,7 @@ if [ "${os}" = "macos" ] ; then
           fi
         fi
       else
-        util::print "  ${magenta}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
+        util::print " ${magenta}[INFO]${noColour} Skipping installation of bash-completion@2.\n"
       fi
     else
       bash_completion_installed=1
@@ -547,8 +550,9 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "pandoc"               # markup format conversion.
     brew_install "gnupg"                # cryptography.
     brew_install "hyperkey"             # a fifth modifer key.
-    brew_install "gifsicle"             # Gif conversion tools
+    brew_install "gifsicle"             # Gif conversion tools.
     brew_install "tree"                 # Tree-style directory viewer.
+    brew_install "p7zip"                # 7zip extractor.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.

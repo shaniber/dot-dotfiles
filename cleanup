@@ -1,17 +1,17 @@
-/opt/homebrew/bin/brew remove jq
-/opt/homebrew/bin/brew remove oniguruma
-/opt/homebrew/bin/brew remove coreutils
-/opt/homebrew/bin/brew remove gmp
-/opt/homebrew/bin/brew remove bash-completion@2
-/opt/homebrew/bin/brew remove bash
-/opt/homebrew/bin/brew remove shellcheck
-/opt/homebrew/bin/brew remove rectangle
-/opt/homebrew/bin/brew remove syntax-highlight
-/opt/homebrew/bin/brew remove qlmarkdown
-/opt/homebrew/bin/brew remove spotify
-/opt/homebrew/bin/brew remove discord
-/opt/homebrew/bin/brew remove pandoc
-/opt/homebrew/bin/brew remove visual-studio-code
+/usr/local/bin/brew remove jq
+/usr/local/bin/brew remove oniguruma
+/usr/local/bin/brew remove coreutils
+/usr/local/bin/brew remove gmp
+/usr/local/bin/brew remove bash-completion@2
+/usr/local/bin/brew remove bash
+/usr/local/bin/brew remove shellcheck
+/usr/local/bin/brew remove rectangle
+/usr/local/bin/brew remove syntax-highlight
+/usr/local/bin/brew remove qlmarkdown
+/usr/local/bin/brew remove spotify
+/usr/local/bin/brew remove discord
+/usr/local/bin/brew remove pandoc
+/usr/local/bin/brew remove visual-studio-code
 
 rm ${HOME}/.bash* ${HOME}/.vim* ${HOME}/.git* ${HOME}/.inputrc 
 rm -rf ${HOME}/bin ${HOME}/.ssh
