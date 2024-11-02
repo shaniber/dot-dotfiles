@@ -553,6 +553,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "gifsicle"             # Gif conversion tools.
     brew_install "tree"                 # Tree-style directory viewer.
     brew_install "p7zip"                # 7zip extractor.
+    brew_install "rar"                  # rar extractor.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
