@@ -30,6 +30,7 @@ There's a lot of other dotfiles repos out there. I've borrowed ideas from a lot 
 - https://github.com/skx/dotfiles/
 - https://github.com/mathiasbynens/dotfiles
 - https://github.com/benjifs/dotfiles
+- https://github.com/atomantic/dotfiles
 
 Here's an interesting article on Atlassian about how to use git to manage your configuration files. This might be a possible direction to take this repo, if only for experimentation.  
 
