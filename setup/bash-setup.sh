@@ -153,7 +153,7 @@ function util::confirm_requirements() {
         done
 
         /usr/bin/git clone https://github.com/Homebrew/brew.git "${brew_repo}"
-	/bin/ln -sf "${brew_repo}/bin/brew" "${brew_bin}/brew"
+        /bin/ln -sf "${brew_repo}/bin/brew" "${brew_bin}/brew"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew analytics off 
         "${brew_bin}"/brew update --force --quiet
