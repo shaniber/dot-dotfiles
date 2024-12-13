@@ -23,7 +23,14 @@
 	process = git-lfs filter-process
 	required = true
 
-# name, email, and excludesfile are in the local file.
+# Include default GitHub config for my identity
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+    path = ~/.config/git/config-gh-shaniber
+
+[includeIf "hasconfig:remote.*.url:git@github.com:shaniber/**"]
+    path = ~/.config/git/config-gh-shaniber
+
+# Add local or custom identities to the gitconfig_local file.
 [include]
 	path = ~/.gitconfig_local
 
