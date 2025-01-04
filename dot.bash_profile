@@ -109,6 +109,7 @@ alias pls='sudo $(history -p \!\!)'
 alias noc='/usr/bin/egrep -v "^\s*(#|$)"'
 alias grep='/usr/bin/grep --colour=always'
 alias rand='/usr/bin/head -c4 /dev/urandom | /usr/bin/od -An -vtu4'
+alias urlcheck='/usr/bin/curl -I -o /dev/null --silent --write-out '\''%{http_code}\n'\'''
 
 # git helpers.
 export GIT_PS1_SHOWDIRTYSTATE=yesPlease
