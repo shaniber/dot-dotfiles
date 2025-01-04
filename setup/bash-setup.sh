@@ -153,7 +153,7 @@ function util::confirm_requirements() {
         done
 
         /usr/bin/git clone https://github.com/Homebrew/brew.git "${brew_repo}"
-	/bin/ln -sf "${brew_repo}/bin/brew" "${brew_bin}/brew"
+        /bin/ln -sf "${brew_repo}/bin/brew" "${brew_bin}/brew"
         eval "$("${brew_bin}"/brew shellenv)"
         "${brew_bin}"/brew analytics off 
         "${brew_bin}"/brew update --force --quiet
@@ -227,7 +227,7 @@ function brew_install() {
   "${brew_bin}"/brew install "${1}"
 }
 
-function link_config_file () {
+function link_dot_file () {
   dotfile="${1}"
   util::print "${blue}[ACTION]${noColour} Installing .${dotfile}.\n"
   if [ -f "${HOME}/.${dotfile}" ] && [ ! -L "${HOME}/.${dotfile}" ]; then
@@ -241,6 +241,16 @@ function link_config_file () {
     fi
   fi
   sleep 1
+}
+
+function link_config_file () {
+  configfile="${1}"
+  util::print "${blue}[ACTION]${noColour} Installing .config/${configfile}.\n"
+  if [ -d "${HOME}/.config/${configfile}" ] ; then
+    # TODO Let's figure this out at home. I'm tired right now.
+    util::print "         (Preserving existing at .${configfile}.BAK-${ds}\n"
+  fi
+
 }
 
 function link_prefs_file () {
@@ -519,19 +529,22 @@ if [ "${os}" = "macos" ] ; then
 fi
 
 ## Install dot files proper.
-link_config_file "bash_profile"
-link_config_file "bashrc"
-link_config_file "bash_logout"
-link_config_file "gitconfig"
-link_config_file "gitignore"
-link_config_file "inputrc"
-link_config_file "vimrc"
-link_config_file "vim"
-link_config_file "ssh/config"
-link_config_file "ssh/ssh_config.d/git_hosts"
-link_config_file "nethackrc"
+link_dot_file "bash_profile"
+link_dot_file "bashrc"
+link_dot_file "bash_logout"
+link_dot_file "gitconfig"
+link_dot_file "gitignore"
+link_dot_file "inputrc"
+link_dot_file "vimrc"
+link_dot_file "vim"
+link_dot_file "ssh/config"
+link_dot_file "ssh/ssh_config.d/git_hosts"
+link_dot_file "nethackrc"
 
-## Install ~/Library/Preferences files
+## Install ~/.config preference files.
+link_config_file "git"
+
+## Install ~/Library/Preferences files.
 link_prefs_file "com.googlecode.iterm2"
 
 ## Install git-completion and git-prompt
@@ -553,6 +566,7 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "gifsicle"             # Gif conversion tools.
     brew_install "tree"                 # Tree-style directory viewer.
     brew_install "p7zip"                # 7zip extractor.
+    brew_install "rar"                  # rar extractor.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.

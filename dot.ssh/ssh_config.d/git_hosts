@@ -4,12 +4,18 @@
 
 # Default Bitbucket (shaniber)
 Host bitbucket.org
-    HostName bitbucket.org
-    IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 
 ## GitHub
 # shaniber GitHub 
-Host shaniber.github.com
-    HostName github.com
-    IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
+Host gh-shaniber
+  HostName github.com
+  User git   
+  IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 
+# doucette-test GitHub
+Host gh-doucette-test
+  HostName github.com
+  User git
+  IdentifyFile ~/.ssh/keys/doucette-test/id_ed25519
