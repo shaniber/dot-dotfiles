@@ -14,3 +14,8 @@ Host gh-shaniber
   User git   
   IdentityFile ~/.ssh/keys/tauntedechoes/id_rsa
 
+# doucette-test GitHub
+Host gh-doucette-test
+  HostName github.com
+  User git
+  IdentifyFile ~/.ssh/keys/doucette-test/id_ed25519
