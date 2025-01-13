@@ -59,10 +59,10 @@ macos)
   # More convenient ls colours. 
   export LSCOLORS=gxfxcxdxbxegedabagaced
 
+  alias ssidname='system_profiler SPAirPortDataType | awk '\''/Current Network Information:/{getline; print $1; exit}'\'' | sed '\''s/:.*//'\'' | awk '\''{$1=$1};1'\''' 
   alias crashreport='vim ~/Documents/Crashes/`date "+%Y%m%d%H%M%S"`.panic'
   alias flushdns='sudo killall -HUP mDNSResponder; sleep 2; echo macOS DNS Cache is reset.'
   alias ls="ls -G"
-  alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
   source "${HOME}/.dotfiles/functions/functions.macos"
   ;;
 esac
