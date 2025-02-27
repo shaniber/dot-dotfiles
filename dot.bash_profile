@@ -100,7 +100,7 @@ PROMPT_COMMAND='ret=$?; if [ $ret -ne 0 ] ; then printf "${white}${lbluebg}${bol
 
 # User specific environment and startup programs
 VISUAL="/usr/bin/vim"
-EDITOR="/usr/bin/vi -e"
+EDITOR="/usr/bin/vi"
 GREP_COLORS='fn=1;32'
 
 
