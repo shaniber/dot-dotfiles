@@ -43,7 +43,14 @@ bash_completion_installed=0
 # Current datestamp
 ds=$(date +%Y%m%d%H%M%S)
 
-source "$(pwd)/lib/bash-functions-library/bash-functions-lib.sh"
+if [ -f "$(pwd)/lib/bash-functions-library/bash-functions-lib.sh" ] ; then 
+  source "$(pwd)/lib/bash-functions-library/bash-functions-lib.sh"
+else 
+  echo "Could not find the functions library. Check your path, make sure that"
+  echo "  it has been cloned to the lib/bash-functions-library directory, and"
+  echo "  for crying out loud, clear your room already."
+  exit 1
+fi
 
 ## Usage.
 function util::usage() {
