@@ -18,4 +18,4 @@ Host gh-shaniber
 Host gh-doucette-test
   HostName github.com
   User git
-  IdentifyFile ~/.ssh/keys/doucette-test/id_ed25519
+  IdentityFile ~/.ssh/keys/doucette-test/id_ed25519
