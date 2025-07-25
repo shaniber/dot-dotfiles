@@ -567,6 +567,8 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "tree"                 # Tree-style directory viewer.
     brew_install "p7zip"                # 7zip extractor.
     brew_install "rar"                  # rar extractor.
+    brew_install "bottom"               # Graphical process/system monitor.
+    brew_install "procs"                # Process status lister.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
