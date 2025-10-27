@@ -2,7 +2,7 @@
 
 A collection of _extremely opinionated_ config files, custom to me. You probably shouldn't use them. In fact, at this point, I am specifically waiving any responsibility for these, and offering no warranties, explicit or implied. If you use these, changes will be made to your system and account that can break a lot of things for you.  
 
-**USE THESE AT YOUR OWN RISK**. I offer no support for you if you use these and have issues. I'm happy to entertain suggestions, or have a friendly chat about why I made decisions on things, but issues or support requests will be closed and ignored. 
+**USE THESE AT YOUR OWN RISK**. I offer no support for you if you use these and have issues. I'm happy to entertain suggestions, or have a friendly chat about why I made decisions on things, but issues or support requests will be closed and ignored if they don't have code and/or a really good explanation of what the problem is and how to fix it. 
 
 ## Installation
 
