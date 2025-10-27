@@ -37,6 +37,10 @@ Here's an interesting article on Atlassian about how to use git to manage your c
 
 - https://www.atlassian.com/git/tutorials/dotfiles
 
+Adib Hanna has a substack that features / reviews folks's dotfile repos. Lots of interesting takes in there.
+
+- https://dotfiles.substack.com/
+
 ## To Do
 - Decide how to deal with vim plugins. 
   - Download when desired wanted?
