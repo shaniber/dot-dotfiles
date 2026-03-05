@@ -360,6 +360,7 @@ util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
 
+main() {
 ## Create $HOME/bin directory.
 util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
@@ -574,6 +575,8 @@ if util::confirm "${orange}[QUERY]${noColour} Install some useful software?" ; t
     brew_install "tree"                 # Tree-style directory viewer.
     brew_install "p7zip"                # 7zip extractor.
     brew_install "rar"                  # rar extractor.
+    brew_install "bottom"               # Graphical process/system monitor.
+    brew_install "procs"                # Process status lister.
 
     ### GUI apps
     brew_install "pinta"                # Simple paint program.
@@ -632,4 +635,7 @@ fi
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
+}
 
+
+main "$@"
