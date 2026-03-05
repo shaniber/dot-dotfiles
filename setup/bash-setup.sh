@@ -353,6 +353,7 @@ util::confirm_requirements
 
 ## -=-=-= MAIN SCRIPT =-=-=- ##
 
+main() {
 ## Create $HOME/bin directory.
 util::debug "Checking for ${HOME}/bin directory."
 if ! [ -d "${HOME}/bin" ] ; then 
@@ -627,4 +628,7 @@ fi
 
 util::print "${bold}COMPLETE!${noColour}\n"
 util::print "There's probably a lot more to properly do here, but we'll continue with it later.\n"
+}
 
+
+main "$@"
